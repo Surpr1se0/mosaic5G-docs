@@ -297,31 +297,6 @@ This subproject is implemented as a necessary part of the ll-mec - in order to r
 Ubuntu 18.04, 16.04
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 8. store
 
 
@@ -330,7 +305,7 @@ The network store - a repository of network functions, controll applications, SD
 ```
 > Authored 6 years ago
 
-From the article mencionwe get:
+From the article mencioned previously (available in the project folder mencioned in the first section) we get:
 *The Store is in form of a distribution repository that contains a constellation of platform packages, SDKs, control applications, datasets and models. It aims to develop and bundle plug-and-play (P&P) network applications tailored to a particular use case, and also to compose and customize a network service delivery platform across reusable applications. Each control application has its control purpose, and it relies on different granularities of net-work status information from the platform SDK and may further provide APIs to other control applications.*
 
 There are different projects inside this subproject. The main one is flexRAN SDK, a software development kit, that has been developed to facilitate the use of the API that is exposed by flexRAN-rtc. Several applications have been made with this sdk:
