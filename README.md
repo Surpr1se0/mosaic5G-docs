@@ -31,9 +31,12 @@
           <li><a href="#7-ovs-gtp">ovs-gtp</a></li>
           <li><a href="#8-store">store</a></li>
         </ul>
-        <li><a href="#Implementation">Implementation</a></li>
       </ul>
     <li><a href="#OAI">OAI</a></li>
+        <ul>
+        <li><a href="##Documentation">Documentation</a></li>
+        </ul>
+    <li><a href="#Implementation">Implementation</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
   <br>
@@ -127,7 +130,7 @@ Essentially, using JOX we can define network slices that can be independently op
 Juju version 2.5.1 (Juju version 2+ recommended)
 ```
 
-These packages are only required if you are not running the script `install_dependencies` in the tools directory.
+These packages are only required if you are not running the script `install_dependencies` located in the tools directory.
 
 ### Supported Versions: 
 ```bash
@@ -142,6 +145,7 @@ Cloud-Native Agile 5G Service Platforms.
 ```
 
 > Authored 4 years ago
+
 This project does not represent a specific element of a 5G network like the last ones. It simply aims to facilitate the deployment and management of 4G/5G network and services in cloud like environments - kubernetes and OpenShitft. 
 
 Within the project we get:
@@ -273,13 +277,13 @@ Fedora 3.7
 
 
 ```md
-A repository of network function, control application, SDK, charms, templates, images, tools.
+OVS Switching with GTP Patch
 ```
+This is an open-source implementation of a distributed virtual multilayer switch. The main purpose of OpenvSwitch is to provide a switching stack for hardware virtualization environments, while supporting multiple protocols and standards used in computer networks.
 
 > Authored 4 years ago
 
-This is a subproject that is implemented as a necessary part of the ll-mec - in order to run ll-mec we need OpenvSwitching with GTP ability. 
-
+This subproject is implemented as a necessary part of the ll-mec - in order to run ll-mec we need OpenvSwitching with GTP ability. 
 
 ### Required Packages:
 
@@ -326,7 +330,7 @@ The network store - a repository of network functions, controll applications, SD
 ```
 > Authored 6 years ago
 
-From the article we get:
+From the article mencionwe get:
 *The Store is in form of a distribution repository that contains a constellation of platform packages, SDKs, control applications, datasets and models. It aims to develop and bundle plug-and-play (P&P) network applications tailored to a particular use case, and also to compose and customize a network service delivery platform across reusable applications. Each control application has its control purpose, and it relies on different granularities of net-work status information from the platform SDK and may further provide APIs to other control applications.*
 
 There are different projects inside this subproject. The main one is flexRAN SDK, a software development kit, that has been developed to facilitate the use of the API that is exposed by flexRAN-rtc. Several applications have been made with this sdk:
@@ -348,10 +352,11 @@ Nothing was specified
 Nothing was specified
 ```
 
-
-##  **Implementation**
-
-
 # OAI
 
 ##  **Documentation**
+
+
+#  **Implementation**
+
+
