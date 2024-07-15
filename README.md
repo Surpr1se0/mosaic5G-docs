@@ -20,7 +20,7 @@
     </li>
     <li><a href="#Mosaic5G">Mosaic5G</a></li>
       <ul>
-        <li><a href="##Documentation">Documentation</a></li>
+        <li><a href="#Documentation">Documentation</a></li>
         <ul>
           <li><a href="#1-flexran-rtc">flexran-rtc</a></li>
           <li><a href="#2-jox">jox</a></li>
@@ -34,9 +34,13 @@
       </ul>
     <li><a href="#OAI">OAI</a></li>
         <ul>
-        <li><a href="##Documentation">Documentation</a></li>
+        <li><a href="#Documentation">Documentation</a></li>
+        <li><a href="#Implementations">Implementations</a></li>
+        <ul>
+          <li><a href="#1. OAI-CN Deployment">OAI-CN</a></li>
+          <li><a href="#2.Full-Stack Implementation">Full Stack Implementation</a></li>
         </ul>
-    <li><a href="#Implementation">Implementation</a></li>
+        </ul>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
   <br>
@@ -331,7 +335,305 @@ Nothing was specified
 
 ##  **Documentation**
 
+## **Implementations**
 
-#  **Implementation**
+### 1. OAI-CN Deployment
 
+> 4GB de memoria, 8 processadores, 25GB de disco (15 utilizados para a CN) - [Ubuntu 22.04 LTS](https://releases.ubuntu.com/22.04/ubuntu-22.04.4-desktop-amd64.iso)
+> 
 
+####  Pre-requisites
+
+Começamos por instalar o docker para o ubuntu.
+
+```bash
+sudo apt install -y git net-tools putty
+
+# instalar o docker para o ubuntu.
+
+# https://docs.docker.com/engine/install/ubuntu/
+sudo apt install -y ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+# Add your username to the docker group, otherwise you will have to run in sudo mode.
+sudo usermod -a -G docker $(whoami)
+reboot 
+```
+
+#### Config Files
+
+Fazer download dos ficheiros de config de: `https://gitlab.eurecom.fr/oai/openairinterface5g/-/archive/develop/openairinterface5g-develop.zip?path=doc/tutorial_resources/oai-cn5g.`
+
+Este ficheiro contém: 
+
+![alt text](image.png)
+
+O docker compose contêm: 
+
+1. **mysql**:
+    - **container_name**: "mysql"
+    - **image**: mysql:8.0
+    - **volumes**:
+        - Monta um script SQL inicial (`oai_db.sql`) para iniciar o banco de dados.
+        - Monta um script de healthcheck (`mysql-healthcheck.sh`) para monitorizar a saúde do serviço MySQL.
+    - **environment**: Define variáveis de ambiente, como o fuso horário e credenciais do banco de dados.
+    - **healthcheck**: Especifica um comando para verificar a saúde do serviço MySQL.
+    - **networks**: Atribui um endereço IP estático ao conteiner no `public_net`.
+2. **ims** (IP Multimedia Subsystem):
+    - **container_name**: "ims"
+    - **image**: oaisoftwarealliance/ims
+    - **volumes**: Monta arquivos de configuração SIP e utilizadores.
+    - **healthcheck**: Usa `pgrep` para verificar se o processo `asterisk` está em execução.
+    - **networks**: Atribui um endereço IP estático ao conteiner no `public_net`.
+3. **oai-udr** (Unified Data Repository):
+    - **container_name**: "oai-udr"
+    - **image**: oaisoftwarealliance/oai-udr
+    - **volumes**: Monta um arquivo de configuração `config.yaml`.
+    - **environment**: Define o fuso horário.
+    - **depends_on**: Especifica dependências de outros conteiners (mysql, oai-nrf).
+    - **networks**: Atribui um endereço IP estático ao conteiner no `public_net`.
+4. **oai-udm** (Unified Data Management):
+    - Similar ao `oai-udr`, mas depende do `oai-udr`.
+5. **oai-ausf** (Authentication Server Function):
+    - Similar ao `oai-udm`, mas depende do `oai-udm`.
+6. **oai-nrf** (Network Repository Function):
+    - Similar ao `oai-udr`, mas sem dependências adicionais.
+7. **oai-amf** (Access and Mobility Management Function):
+    - Similar ao `oai-udr`, mas depende de vários serviços (`mysql`, `oai-nrf`, `oai-ausf`).
+8. **oai-smf** (Session Management Function):
+    - Similar ao `oai-udr`, mas depende de `oai-nrf` e `oai-amf`.
+9. **oai-upf** (User Plane Function):
+    - Similar ao `oai-udr`, mas com capacidades adicionais (`NET_ADMIN`, `SYS_ADMIN`) e é privilegiado.
+    - Depende de `oai-nrf` e `oai-smf`.
+10. **oai-ext-dn** (External Data Network):
+    - **privileged**: true, indica que o conteiner tem privilégios elevados.
+    - **init**: true, garante que o sistema de init é usado.
+    - **container_name**: oai-ext-dn
+    - **image**: oaisoftwarealliance/trf-gen-cn5g
+    - **entrypoint**: Adiciona uma rota IP e mantém o conteiner em execução.
+    - **healthcheck**: Verifica se a rota IP está configurada corretamente.
+    - **networks**: Atribui um endereço IP estático ao conteiner no `public_net`.
+11. **public_net**: Define uma rede de ponte (`bridge`) chamada `oai-cn5g-public-net` com uma sub-rede especificada (`192.168.70.128/26`).
+
+```bash
+wget -O ~/oai-cn5g.zip https://gitlab.eurecom.fr/oai/openairinterface5g/-/archive/develop/openairinterface5g-develop.zip?path=doc/tutorial_resources/oai-cn5g
+unzip ~/oai-cn5g.zip
+mv ~/openairinterface5g-develop-doc-tutorial_resources-oai-cn5g/doc/tutorial_resources/oai-cn5g ~/oai-cn5g
+rm -r ~/openairinterface5g-develop-doc-tutorial_resources-oai-cn5g ~/oai-cn5g.zip
+```
+
+#### Iniciar os serviços:
+
+```bash
+cd ~/oai-cn5g
+docker compose up -d
+```
+
+### 2. Full-Stack Implementation
+
+####  0. Requisitos mínimos:
+
+> 4GB de memoria, 8 processadores, 20GB de disco - [Ubuntu 22.04 LTS](https://releases.ubuntu.com/22.04/ubuntu-22.04.4-desktop-amd64.iso). Implementação do AMF, SMF, UPF =  Core. gNB e UE.
+> 
+
+#### 1. Instalação Pré Requisitos:
+
+```bash
+git clone https://gitlab.eurecom.fr/oai/openairinterface5g.git
+```
+
+- *Instalação do Docker - consultar o último tutorial.*
+
+#### 2. Pull das diferentes Imagens:
+
+Este passo é opcional, visto que à medida que formos a dar *up* aos diferentes containers eles irão buscar as imagens correspondentes.  Mesmo assim, fazemos:
+
+```bash
+$ docker pull mysql:8.0
+$ docker pull oaisoftwarealliance/oai-amf:v2.0.0
+$ docker pull oaisoftwarealliance/oai-smf:v2.0.0
+$ docker pull oaisoftwarealliance/oai-upf:v2.0.0
+$ docker pull oaisoftwarealliance/trf-gen-cn5g:focal
+
+$ docker pull oaisoftwarealliance/oai-gnb:develop
+$ docker pull oaisoftwarealliance/oai-nr-ue:develop
+```
+
+- **`mysql:8.0`**
+    - É usada para armazenar dados persistentes da rede 5G, como informações de subscribers e configuração de rede.
+- **`oaisoftwarealliance/oai-amf:v2.0.0`**
+    - Access and Mobility Management Function é responsável pela gestão de conexões e mobilidade. Esta imagem é usada para iniciar o serviço AMF, que gere a conexão dos dispositivos móveis à rede e coordena a mobilidade entre diferentes células de rádio.
+- **`oaisoftwarealliance/oai-smf:v2.0.0`**
+    - Session Management Function é responsável pela gestão de sessões e routing de pacotes na rede 5G. Esta imagem é usada para iniciar o serviço SMF, que gere as sessões de dados, incluindo a criação, modificação e exclusão de sessões de dados.
+- **`oaisoftwarealliance/oai-upf:v2.0.0`**
+    - User Plane Function é responsável pelo encaminhamento de dados de users na rede 5G. Esta imagem é usada para iniciar o serviço UPF, que trata o tráfego de dados do user, encaminhando pacotes entre a rede de rádio e a rede externa.
+- **`oaisoftwarealliance/trf-gen-cn5g:focal`**
+    - Contem uma ferramenta de geração de tráfego. É usada para simular o tráfego de dados de usuário e testar a capacidade e desempenho da rede 5G implementada.
+- **`oaisoftwarealliance/oai-gnb:develop`**
+    - Esta imagem é usada para iniciar o serviço gNB, que implementa a estação base da rede de rádio 5G, gerindo a comunicação entre os dispositivos móveis e o core.
+- **`oaisoftwarealliance/oai-nr-ue:develop`**
+    - Esta imagem é usada para iniciar um simulador de dispositivo de user 5G, que simula um dispositivo móvel a conectar-se e a comunicar com a rede 5G.
+
+No final podemos confirmar que todos os containers estão a correr com o `docker-compose ps -a`.
+
+#### 3. Esquema do Deployment
+
+![alt text](image-1.png)
+
+- **OAI-NR-UE**
+    - **Função:** Simulador de equipamento de user (UE).
+- **OAI-gNB (rfsim)**
+    - **Função:** Simulador de estação base 5G (gNB).
+- **MySQL Server**
+    - **Função:** Banco de dados que armazena informações sobre os utilizadores e configuração da rede.
+    - **Conexão:** Interage com OAI-AMF e outros componentes para fornecer dados de configuração e autenticação.
+- **OAI-AMF**
+    - **Função:** Função de Gestão de Acesso e Mobilidade.
+    - **Conexão:** Conecta-se ao MySQL Server, OAI-gNB e OAI-SMF
+- **OAI-SMF**
+    - **Função:** Função de Gestão de Sessão.
+    - **Conexão:** Conecta-se ao OAI-AMF , OAI-UPF  e OAI-NRF .
+- **OAI-UPF (OAI-SPGWU)**
+    - **Função:** Função de Plano de Utilizador.
+    - **Conexão:** Conecta-se ao OAI-SMF e à OAI-EXT-DN para fornecer acesso à internet.
+- **OAI-NRF**
+    - **Função:** Função de Registo de Funções de Rede.
+    - **Conexão:** Registra outras funções de rede, incluindo AMF e SMF, e fornece descoberta de serviços.
+- **OAI-EXT-DN**
+    - **Função:** Rede de Dados Externa que fornece conectividade à internet.
+    - **Conexão:** Conecta-se ao OAI-UPF para encaminhar o tráfego de dados dos utilizadores para a internet.
+
+<aside>
+💡 No caso do que eu realizei, **modo monolithic,** todas as funções do gNB são integradas numa única entidade - ou seja, unidade de controlo e unidade distribuida está contida num só componente.
+
+</aside>
+
+É importante a pasta de onde corrermos os containers apartir de agora.
+
+#### 2.1. Deployment do 5G Core:
+
+```bash
+cd ci-scripts/yaml_files/5g_rfsimulator
+docker-compose up -d mysql oai-amf oai-smf oai-upf oai-ext-dn
+```
+
+Ao realizarmos isto, também estamos a criar redes virtuais que permitem a comunicação entre os diferentes containers. Se fizermos o `ifconfig`, podemos ver que temos duas redes - **rfsim5g-traffic & rfsim5g-public:** rede publica virtual utilizada pelos conteiners, e a rede utilizada pelos containers para gerir o tráfego de dados - isto e entre mesmo os componentes do core por exemplo.
+
+#### 2.2. Deployment do gNB:
+
+<aside>
+💡 Essencialmente estamos a utilizar aqui o **RF Simulator mode,** isto poorque as frequências radio, sinais e radio channel conditions estão a ser simuladas em vez de utilizarmos mesmo hardware de radio (*resolve o problema que tinhas de não ter o equipamento físico.*)
+
+</aside>
+
+```bash
+docker-compose up -d oai-gnb
+```
+
+Para verificarmos se o gNB se conectou com o AMF: 
+
+```bash
+docker logs rfsim5g-oai-amf
+```
+
+#### 2.3. Deployment do NR-UE
+
+```bash
+docker-compose up -d oai-nr-ue
+```
+
+Ao darmos este deployment convem verificarmos se o UE está conectado:
+
+```bash
+docker exec -it rfsim5g-oai-nr-ue /bin/bash
+root@bb4d400a832d:/opt/oai-nr-ue# ifconfig
+
+# no output deve constar uma interface do tipo:
+oaitun_ue1
+```
+
+A interface `oaitun_ue1` é um túnel end-to-end que vai do UE até à core Network que está noutro container. 
+
+#### 2.4. Deployment do Segundo NR-UE
+
+No tutorial é pedido que seja criado uma segunda entidade, ou um novo UE. No nosso caso, todas as entidades já estavam criadas no ficheiro `docker-compose.yaml` . Sendo assim só precisamos de fazer: 
+
+```bash
+docker-compose up -d oai-nr-ue2
+
+# e verificar novamente se está conectado à core: 
+docker exec -it rfsim5g-oai-nr-ue2 /bin/bash
+root@bb4d400a832d:/opt/oai-nr-ue# ifconfig
+```
+
+#### 3.1. Conectividade à internet:
+
+![alt text](image-2.png)
+
+<aside>
+💡 O que é queremos essencialmente é verificar se o nosso UE consegue atingir a internet pela nossa core network, tudo através de containers.
+
+</aside>
+
+```
+$ docker exec -it rfsim5g-oai-nr-ue /bin/bash
+root@bb4d400a832d:/opt/oai-nr-ue# ping -I oaitun_ue1 -c 10 www.google.com
+```
+
+Como isto não funciona, indica que eu tenho de modificar os valores do DNS no docker-compose. Não consegui encontrar que valores é que ele se refere.
+
+Porém, alternativamente ao utilizar: 
+
+```
+$ docker exec -it rfsim5g-oai-nr-ue /bin/bash
+root@bb4d400a832d# ping -I oaitun_ue1 -c 2 192.168.72.135
+```
+
+Consegui correr sem problemas.
+
+<aside>
+💡 Já este teste é entre o UE e um elemento exterior à core. Isto prova que conseguimos ter comunicação entre os elementos da rede.
+
+</aside>
+
+#### 3.2. Testes com o servidor iperf:
+
+*Temos de fazer este teste em dois terminais diferentes!*
+
+**Para ligarmos o servidor iperf dentro do UE container:** 
+
+```
+docker exec -it rfsim5g-oai-nr-ue /bin/bash
+root@bb4d400a832d:/opt/oai-nr-ue# iperf -B 12.1.1.2 -u -i 1 -s
+```
+
+**Para ligarmos o cliente iperf dentro do ext-dn container:**
+
+```
+docker exec -it rfsim5g-oai-ext-dn /bin/bash
+root@f239e31a0bd0:/# iperf -c 12.1.1.2 -u -i 1 -t 20 -b 500K
+```
+
+Com este teste, utilizamos o `iperf` para comprovar que de facto existe um fluxo de dados vindo da rede externa para o dispositivo UE, para além disso também conseguimos comunicar com um segundo UE, realizando um simples ping.
+
+#### Notas adicionais:
+
+- Temos de garantir em primeiro lugar que o UE está reconhecido na nossa core network, especialmente na base de dados e no AMF.
+- O operator key, o que identifica o AMF deve coincidir com o OPC que está no UE.
+- Os valores de identificação para cada “cartão sim” encontram-se em: `~/openairinterface5g/ci-scripts/conf_files$ vim nrue.uicc.conf.`
+    - IMSI:  identificador do sim
+    - Key
+    - OPC.
+    - DNN: nome da network
+    - NSSAI_SST - tipo de service slide que o UE deve utilizar
+  > Adicionalmente estes valores devem aparecer na base de dados sql, depois de fazermos o docker-compose.
+
+No docker-compose.yaml, podemos configurar estes parâmetros com as seguintes diretivas, sendo o parâmetro dos volumes, onde está contido o ficheiro com a configuração do UICC (o cartão sim).
+
+![alt text](image-3.png)
