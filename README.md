@@ -16,11 +16,11 @@
       <a href="#Introduction">Introduction</a>
     </li>
     <li>
-      <a href="#useful-links">Useful Links</a>
+      <a href="#Useful-links">Useful Links</a>
     </li>
     <li><a href="#Mosaic5G">Mosaic5G</a></li>
       <ul>
-        <li><a href="#Documentation">Documentation</a></li>
+        <li><a href="#Mosaic5G-Documentation">Documentation</a></li>
         <ul>
           <li><a href="#1-flexran-rtc">flexran-rtc</a></li>
           <li><a href="#2-jox">jox</a></li>
@@ -34,11 +34,11 @@
       </ul>
     <li><a href="#OAI">OAI</a></li>
         <ul>
-        <li><a href="#Documentation">Documentation</a></li>
+        <li><a href="#OAI-Documentation">Documentation</a></li>
         <li><a href="#Implementations">Implementations</a></li>
         <ul>
-          <li><a href="#1. OAI-CN Deployment">OAI-CN</a></li>
-          <li><a href="#2.Full-Stack Implementation">Full Stack Implementation</a></li>
+          <li><a href="#1-oai-cn-deployment">OAI-CN</a></li>
+          <li><a href="#2-full-stack-implementation">Full Stack Implementation</a></li>
         </ul>
         </ul>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -75,7 +75,7 @@ These are the repositories that are useful:
 
 # Mosaic5G
 
-##  **Documentation**
+##  **Mosaic5G-Documentation**
 
 ## 1. flexran-rtc
 
@@ -91,6 +91,10 @@ It is the real-time access network controller. It is composed by 2 main key elem
   - **RAN Runtime**: acts as a local agent controlled by RTC, virtualizes the underlying RAN radio resources, pipelines the RAN service function chain, and provides SDKs enabling distributed control applications. Further, the RAN runtime can support various slice requirements (e.g., isolation) and also improve multiplexing benefits (e.g., sharing) in terms of radio resource abstractions and modularized/customized RAN compositions for RAN slicing purpose.
 
 Essentially it aims to provide a programmable architecture for SD-RANs. It aims to separate the control and data plane of the RAN.
+
+### FlexRAN vs FlexRIC:
+
+[Please refer to this link.](flexran&flexric.md)
 
 ### Required Packages:
 
@@ -333,7 +337,7 @@ Nothing was specified
 
 # OAI
 
-##  **Documentation**
+##  **OAI-Documentation**
 
 ## **Implementations**
 
@@ -586,7 +590,7 @@ $ docker exec -it rfsim5g-oai-nr-ue /bin/bash
 root@bb4d400a832d:/opt/oai-nr-ue# ping -I oaitun_ue1 -c 10 www.google.com
 ```
 
-Como isto não funciona, indica que eu tenho de modificar os valores do DNS no docker-compose. Não consegui encontrar que valores é que ele se refere.
+Como isto não funciona, indica que eu tenho de modificar os valores do DNS no docker-compose. Não consegui encontrar que valores é que ele se refere. Para mais informações sobre este problema referir à secção [problemas com implementação.](#problems-with-the-implementations)
 
 Porém, alternativamente ao utilizar: 
 
@@ -637,3 +641,6 @@ Com este teste, utilizamos o `iperf` para comprovar que de facto existe um fluxo
 No docker-compose.yaml, podemos configurar estes parâmetros com as seguintes diretivas, sendo o parâmetro dos volumes, onde está contido o ficheiro com a configuração do UICC (o cartão sim).
 
 ![alt text](image-3.png)
+
+## **Problems with the Implementations**
+
