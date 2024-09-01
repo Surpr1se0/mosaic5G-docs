@@ -10,14 +10,14 @@ FlexRIC follows the Mosaic5G design principles to be multi-RAT, multi-vendor and
 </aside>
 
 <div style="text-align: center;">
-  <img src="image-4.png" alt="descrição" width="500"/>
+  <img src="img/image-4.png" alt="descrição" width="500"/>
 </div>
 
 The RIC is a central component in the O-RAN architecture. It is designed to bring flexibility to the control of the Radio Access Network (RAN). So flexRIC is designed in such a way that developers and network operators can create custom software-defined RAN controllers.
 
 The E2 Agent SDK refers to the fact that it is also a Software Development Kit designed to facilitate the development of agents that use the E2 interface in the O-RAN architecture: 
 
-![alt text](image-5.png)
+![alt text](img/image-5.png)
 
 <aside>
 💡 E2 Interface: standard connection that enables comms between the RIC and the RAN hardware (gNodeB’s or eNodeB).
@@ -32,7 +32,7 @@ Adicionally we have the FlexCN, a separate component but with the same principle
 
 Features by component and per service model: 
 
-![alt text](image-6.png)
+![alt text](img/image-6.png)
 
 - KPM (Key Performance Metric): This metric refers to key performance parameters measured in cellular networks, such as throughput, latency, or packet loss.
 - RC (Radio Controller): The software component responsible for managing radio resources in the network, including frequency spectrum allocation and transmission power.
@@ -46,14 +46,14 @@ Features by component and per service model:
 **These are some of the RAN monitoring service models (examples):** 
 
 <div style="text-align: center;">
-  <img src="image-7.png" alt="descrição" width="500"/>
+  <img src="img/image-7.png" alt="descrição" width="500"/>
 </div>
 
 
 *Also, FlexRIC from a memory and storage stanpoint:*
 
 <div style="text-align: center;">
-  <img src="image-8.png" alt="descrição" width="300"/>
+  <img src="img/image-8.png" alt="descrição" width="300"/>
 </div>
 
 - Fine-grained monitoring (thanks to advanced service models)
@@ -65,7 +65,7 @@ Features by component and per service model:
 - Built using C/C++ and Python with support for x64 Linux Systems
 
 <div style="text-align: center;">
-  <img src="image-9.png" alt="descrição" width="400"/>
+  <img src="img/image-9.png" alt="descrição" width="400"/>
 </div>
 
 
@@ -86,7 +86,7 @@ As we already know, SDN or Software Defined Networking is one of the key technol
 The **FlexRAN** platform is made up of two main components: FlexRAN Control Plane & FlexRAN Agent API. 
 
 <div style="text-align: center;">
-  <img src="image-10.png" alt="descrição" width="400"/>
+  <img src="img/image-10.png" alt="descrição" width="400"/>
 </div>
 
 The FlexRAN control is composed by a **Master Controller** connected to a number of **FlexRAN Agents -** one connected to each eNodeB. The FlexRAN Agent API acts as a southbound API → interface that connects and communicates with components that are lower in the hierarchy. 
@@ -103,7 +103,7 @@ On top we have a northbound API which allows RAN Apps to control and modify the 
 
 **Flow of operations:** 
 
-![alt text](image-11.png)
+![alt text](/img/image-11.png)
 
 - **FlexRAN Agent**: This component collects statistics and notifications (protocol messages) from the underlying network or RAN. These messages contain essential data about the network's current state.
 - **RIB Updater**: The FlexRAN Agent sends the collected stats and notifications to the RIB Updater. The RIB Updater processes these inputs and generates the necessary updates for the RIB.
@@ -147,4 +147,4 @@ RAN control applications can be developed both on the top of the RAN runtime and
 
 **Protocol API:** 
 
-![alt text](image-13.png)
+![alt text](img/image-13.png)

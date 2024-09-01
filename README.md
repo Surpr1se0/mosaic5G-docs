@@ -23,6 +23,9 @@
         <li><a href="#Mosaic5G-Documentation">Documentation</a></li>
         <ul>
           <li><a href="#1-flexran-rtc">flexran-rtc</a></li>
+          <ul>
+            <li><a href="#flexran-vs-flexric">flexran-rtc</a></li>
+          </ul>
           <li><a href="#2-jox">jox</a></li>
           <li><a href="#3-kube5g">kube5G</a></li>
           <li><a href="#4-ll-mec">ll-mec</a></li>
@@ -376,7 +379,7 @@ Fazer download dos ficheiros de config de: `https://gitlab.eurecom.fr/oai/openai
 
 Este ficheiro contém: 
 
-![alt text](image.png)
+![alt text](img/image.png)
 
 O docker compose contêm: 
 
@@ -488,7 +491,7 @@ No final podemos confirmar que todos os containers estão a correr com o `docker
 
 #### 3. Esquema do Deployment
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 - **OAI-NR-UE**
     - **Função:** Simulador de equipamento de user (UE).
@@ -578,7 +581,7 @@ root@bb4d400a832d:/opt/oai-nr-ue# ifconfig
 
 #### 3.1. Conectividade à internet:
 
-![alt text](image-2.png)
+![alt text](img/image-2.png)
 
 <aside>
 💡 O que é queremos essencialmente é verificar se o nosso UE consegue atingir a internet pela nossa core network, tudo através de containers.
@@ -640,7 +643,7 @@ Com este teste, utilizamos o `iperf` para comprovar que de facto existe um fluxo
 
 No docker-compose.yaml, podemos configurar estes parâmetros com as seguintes diretivas, sendo o parâmetro dos volumes, onde está contido o ficheiro com a configuração do UICC (o cartão sim).
 
-![alt text](image-3.png)
+![alt text](img/image-3.png)
 
 ## **Problems with the Implementations**
 
