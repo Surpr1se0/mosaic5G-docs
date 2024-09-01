@@ -647,3 +647,38 @@ No docker-compose.yaml, podemos configurar estes parâmetros com as seguintes di
 
 ## **Problems with the Implementations**
 
+**Definição do Problema:** DNS não consegue resolver endereços pela interface criada pelo deployment do OAI 5G. Fora desta, funciona como suposto. Apesar disto, consegue-se conectar a interfaces de redes diferentes, tal como foi evidenciado nos testes mencionados anteriormente.
+
+Estes foram os passos seguidos para tentar resolver ou diagnosticar o problema:
+
+- Verificar se o problema poderia ser do DHCP, da máquina virtual (e não da instância docker):
+    
+    ```bash
+    sudo apt install isc-dhcp-client
+    sudo journalctl -u systemd-networkd | grep ens33
+    sudo journalctl -u systemd-networkd
+    sudo systemctl restart systemd-networkd
+    sudo nano /etc/netplan/01-network-manager-all.yaml
+    
+    network:
+    version: 2
+    renderer: networkd
+    ethernets:
+    ens33:
+    dhcp4: yes
+    
+    sudo netplan apply
+    sudo dhclient -v ens33
+    
+    # essencialmente forçamos o dhcp
+    # do cliente a fazer um request DHCP para obter
+    # um endereço IP com novas informações de DNS
+    ```
+    
+    Voltou-se a correr o docker-compose mas sem resolução.
+    
+- Verificar o ficheiro `resolv.conf`  e `named.conf` para verificar os servidores DNS com o que as instâncias são criadas - o ficheiro é automaticamente gerado pelo docker-compose e não pode ser editado.
+- Tentar inserir opções no docker-compose, como sugere a documentação - provou-se impossível visto que não existe nenhuma informação de quais parâmetros devemos inserir, e em que componentes do docker-compose.
+- Tentar executar outras simulações - o problema não existe visto que não mencionam tentativas de comunicação com dispositivos externos.
+- Forçar a escrita de um  servidor DNS conhecido no ficheiro `resolv.conf` através de um `echo >` - também sem sucesso.
+- Tentar correr a simulação com uma versão diferente do Ubuntu -  não correm o resto dos componentes
