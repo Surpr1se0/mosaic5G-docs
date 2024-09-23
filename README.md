@@ -344,6 +344,10 @@ Nothing was specified
 
 ## **Implementations**
 
+### 0. Installing XCP-ng Server
+
+[Please refer to this link.](xcp-ng.md)
+
 ### 1. OAI-CN Deployment
 
 > 4GB de memoria, 8 processadores, 25GB de disco (15 utilizados para a CN) - [Ubuntu 22.04 LTS](https://releases.ubuntu.com/22.04/ubuntu-22.04.4-desktop-amd64.iso)
