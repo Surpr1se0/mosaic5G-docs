@@ -1,4 +1,17 @@
-# Instalação do XCP-ng:
+<br />
+<div align="center">
+  <h1 align="center">XCP-ng</h1>
+    <h4> Instalation</h4>
+  <p align="center">
+  </p>
+  <br>
+</div>
+
+## Introduction: 
+
+XCP-ng is a type 2 open-source hypervisor with capabilities of creating and managing Virtual Machines, from a remote host. XO (XenOrchestra) is the web-based management platform, the virtual appliance or the "dashboard" of XCP-ng in which we can perform several operations on the VM's, the storage units, network, create templates, etc. 
+
+## Implementation: 
 
 ### 1. Tutorial seguido:** 
 
@@ -21,6 +34,8 @@ Apartir deste momento, podemos entrar no dashboard através do link: https://[ip
 ### 4. Instalação do XCP-ng Center (opcional)**
 
 https://github.com/xcp-ng/xenadmin
+
+> *This software is depreceated*
 
 ### 5. Download do ISO ubuntu 22.04 LTS:**
 
