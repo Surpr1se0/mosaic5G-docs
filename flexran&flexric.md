@@ -95,8 +95,7 @@ The FlexRAN control is composed by a **Master Controller** connected to a number
 
 For the communication between the master controller and the agents we have the FlexRAN Protocol.
 
-> *In one direction, the agent sends relevant messages to the master with
-eNodeB statistics, configurations and events, while in the other direction the master can issue appropriate control commands that define the operation of the agents.*
+> *In one direction, the agent sends relevant messages to the master with eNodeB statistics, configurations and events, while in the other direction the master can issue appropriate control commands that define the operation of the agents.*
 > 
 
 On top we have a northbound API which allows RAN Apps to control and modify the state of underlying components such as eNodeBs and UEs based on **statistics and events gathered from the eNodeBs in the FlexRAN control plane.** 
