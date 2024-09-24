@@ -1,4 +1,12 @@
-# FlexRIC: (SD-RAN):
+<br />
+<div align="center">
+  <h1 align="center">FlexRIC and FlexRAN</h1>
+    <h4> Analysis and Comparison</h4>
+  <p align="center">
+  </p>
+  <br>
+</div>
+
 
 The FlexRIC is a component of the Mosaic5G project → with the objective of providing an ecosystem of open source 4G/5G service platforms, towards Open RAN and Open CN: openness and interoperability between equipment from different vendors.
 
