@@ -103,6 +103,21 @@ Additional option(s): --sa -E --rfsim --log_config.global_log_options level,noco
 [INFO  tini (1)] Main child exited with signal (with signal 'Illegal instruction')
 ```
 
+Causa: Current OpenAirInterface.org software requires Intel architecture based PCs
+for the eNB or UE targets. This requirement is due to optimized DSP functions
+which make heavy use of integer SIMD instructions (SSE, SSE2, SSS3, SSE4, and AVX2).
+The software has currently been tested on the following processor families:
+
+Generation 3/4/5/6 Intel Core i5,i7  
+Generation 2/3/4 Intel Xeon  
+Intel Atom Rangeley, E38xx, x5-z8300  
+
+O CPU do nosso servidor é de uma geração anterior a essa, podemos verificar o mesmo utilizando o comando (corrido diretamente no hypervisor) ``` xe host-cpu-info```. 
+
+- [CPU Specs Info](https://ark.intel.com/content/www/us/en/ark/products/47925/intel-xeon-processor-e5620-12m-cache-2-40-ghz-5-86-gt-s-intel-qpi.html)
+
+- [OAI System Requirements](https://gitlab.eurecom.fr/oai/openairinterface5g/-/wikis/OpenAirSystemRequirements)
+
 ### Problem no 2:
 
 - /var/ folder got filled with 50gb of files - maybe implement logrotate, and evaluate the necessary space for the docker-compose and the implications of running docker-compose various times.
