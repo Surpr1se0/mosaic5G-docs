@@ -651,7 +651,46 @@ No docker-compose.yaml, podemos configurar estes parâmetros com as seguintes di
 
 ## **Problems with the Implementations**
 
-**Definição do Problema:** DNS não consegue resolver endereços pela interface criada pelo deployment do OAI 5G. Fora desta, funciona como suposto. Apesar disto, consegue-se conectar a interfaces de redes diferentes, tal como foi evidenciado nos testes mencionados anteriormente.
+Em primeiro lugar é recomendado descarregar as imagens, especialmente o `gnb` e `ue` diretamente à tag mais recente em vez de utilizar a  tag `development` .
+
+**Definição do Problema #1:** Depois da execução do comando `docker-compose up gnb`, enquanto no XenOrchestra, o seguinte erro ocorre: 
+
+```bash
+==================================
+/proc/sys/kernel/core_pattern=|/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -- %E
+No configuration file found: please mount at /opt/oai-gnb/etc/gnb.conf
+[INFO  tini (1)] Spawned child process '/opt/oai-gnb/bin/entrypoint.sh' with pid '7'
+[INFO  tini (1)] Main child exited normally (with status '255')
+```
+Essencialmente, afirma que o ficheiro de configuração do `gnb.conf` não está a ser encontrado/montado para o container correspondente como pretendido.
+
+### Resolução:
+
+Essencialmente dizia que o ficheiro de configuração do gnb.conf não está a ser encontrado/montado para o container como deve de ser
+
+Resolução:
+
+- Desligar o container
+    
+    ```bash
+    docker-compose down oai-gnb
+    ```
+    
+- Utilizar a imagem gnb mencionada anteriormente: em vez da `develop`
+- Dar permissões ao docker para conseguir ler o ficheiro (opcional e não testado) através do `chmod`
+- alterar o formato do ficheiro `.yaml` dentro do docker-compose.yaml na secção do gnb para .conf em vez da extensão .yaml em ambos os ficheiros.
+- Voltar a ligar o container.
+- Verificar os logs:
+    
+    ```bash
+    docker logs oai-gnb
+    ```
+    
+- Adicionalmente, verificar os *logs* do `amf` para garantir que o **enodeb** já se encontra ligado.
+
+**Definição do Problema #2:** DNS não consegue resolver endereços pela interface criada pelo deployment do OAI 5G. Fora desta, funciona como suposto. Apesar disto, consegue-se conectar a interfaces de redes diferentes, tal como foi evidenciado nos testes mencionados anteriormente.
+
+### Tentativa #1: 
 
 Estes foram os passos seguidos para tentar resolver ou diagnosticar o problema:
 
@@ -686,3 +725,71 @@ Estes foram os passos seguidos para tentar resolver ou diagnosticar o problema:
 - Tentar executar outras simulações - o problema não existe visto que não mencionam tentativas de comunicação com dispositivos externos.
 - Forçar a escrita de um  servidor DNS conhecido no ficheiro `resolv.conf` através de um `echo >` - também sem sucesso.
 - Tentar correr a simulação com uma versão diferente do Ubuntu -  não correm o resto dos componentes
+
+### Tentativa #2:
+
+- docker-compose.yaml, na secção do `ue`, colocar o seguinte, e dar restart ao container.
+
+```bash
+dns: 
+	- 8.8.8.8
+```
+- Apesar disto continuamos a ter conectividade com o `ext-dn`.
+
+- Fazer a seguinte alteração: 
+
+```bash
+oai-smf:
+	container_name: "rfsim5g-oai-smf"
+	image: oaisoftwarealliance/oai-smf:v2.0.0
+	environment:
+		- TZ=Europe/Paris
+	volumes:
+		- ./mini_nonrf_config.yaml:/openair-smf/etc/config.yaml                                           depends_on:
+		- oai-amf
+	networks:
+		public_net:
+			ipv4_address: 192.168.71.133
+			
+# VERSUS
+
+oai-smf:
+    container_name: "rfsim5g-oai-smf"
+    image: oaisoftwarealliance/oai-smf:v2.0.0
+    environment:
+        - TZ=Europe/Paris
+        - DEFAULT_DNS_IPV4_ADDRESS=172.21.3.100
+    volumes:
+        - ./mini_nonrf_config.yaml:/openair-smf/etc/config.yaml                                           depends_on:
+        - oai-amf
+    networks:
+        public_net:
+            ipv4_address: 192.168.71.133
+```
+
+- Mesmo assim não temos resultado positivo. 
+
+- Ir diretamente a `mini_nonrf_config.yaml` - ficheiro de configuração do volume do smf. Alterar um dos valores do DNS, fazer `docker-compose down && up` para reiniciar. Não resultou.
+
+- Fazer `iptables -L` para ver as regras de roteamento do host. Inserir a seguinte regra: 
+
+```bash
+iptables -A FORWARD -p icmp --icmp-type echo-request -j ACCEPT
+```
+- Adicionalmente verificar o `tail -f /var/log/ufw.log` para verificar se existia algum bloqueio. Se for o caso fazer `ufw disable`. Deixou de haver bloqueio mas o ping ainda não funciona. 
+
+- `ip route` dentro do container `ue`. Ativar o encaminhamento de pacotes através do ` sudo sysctl -w net.ipv4.ip_forward=1`. Configurar a NAT `sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`.
+
+- Mesmo assim sem resultados positivos.
+
+## **Utilities**
+
+### 1. Comandos para a limpeza total do container: 
+
+```bash
+docker stop oai-nr-ue
+docker-compose stop oai-nr-ue
+docker-compose rm oai-nr-ue
+docker images
+docker rmi [id_imagem]
+```
