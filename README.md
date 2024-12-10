@@ -12,7 +12,7 @@
 # Introduction
 Welcome to the docs of the **Mosaic5G/Openairinterface**, which **currently** serves as repository for understanding, deploying, and managing the key components of the to be implemented system. 
 
-> *Edit: This doc started out by being developed in the `readme` file of the repository but have been converted to Wiki format.* 
+> *Edit: This doc started out by being developed in the `readme` file of the repository but has since been converted to a Wiki format.* 
 
 
 # Structure
@@ -30,7 +30,7 @@ The **wiki** covers the following subjects/sections:
 
 - **Home:** Overview and introduction to the project
 
-- **FlexRAN & FlexRIC:** Documentation of the FlexRAN and FlexRIC components
+- **FlexRAN & FlexRIC:** Documentation of the FlexRAN and FlexRIC components and implementation of FlexRIC component 
 
 - **Mosaic5G Components:** Details on Mosaic5G's tools and functionalities
 
