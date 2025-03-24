@@ -1,0 +1,88 @@
+services:
+  oai-cucp:
+    image: oai-gnb
+    container_name: rfsim5g-oai-cucp
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    networks:
+      rfsim5g-oai-core-net:
+        ipv4_address: 192.168.71.150
+      rfsim5g-oai-f1c-net:
+        ipv4_address: 192.168.72.2
+      rfsim5g-oai-e1-net:
+        ipv4_address: 192.168.77.2
+    command: >
+      /opt/oai-gnb/bin/nr-softmodem -O /opt/oai-gnb/etc/gnb.conf -E --log_config.global_log_options level,nocolor,time --gNBs.[0].E1_INTERFACE.[0].ipv4_cucp 192.168.77.2 --gNBs.[0].local_s_address 192.168.72.2
+    volumes:
+      - ./gnb-cucp.sa.f1.conf:/opt/oai-gnb/etc/gnb.conf
+
+  oai-cuup:
+    image: oai-cuup
+    container_name: rfsim5g-oai-cuup
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    depends_on:
+      - oai-cucp
+    networks:
+      rfsim5g-oai-core-net:
+        ipv4_address: 192.168.71.161
+      rfsim5g-oai-f1u-1-net:
+        ipv4_address: 192.168.73.2
+      rfsim5g-oai-e1-net:
+        ipv4_address: 192.168.77.3
+    volumes:
+      - ./gnb-cuup.sa.f1.conf:/opt/oai-gnb/etc/gnb.conf
+    command: >
+      /opt/oai-gnb/bin/nr-cuup -O /opt/oai-gnb/etc/gnb.conf -E --rfsim --log_config.global_log_options level,nocolor,time --gNBs.[0].E1_INTERFACE.[0].ipv4_cucp 192.168.77.2 --gNBs.[0].E1_INTERFACE.[0].ipv4_cuup 192.168.77.3 --gNBs.[0].local_s_address 192.168.73.2 --gNBs.[0].remote_s_address 127.0.0.1
+
+  oai-du:
+    container_name: rfsim5g-oai-du
+    image: oai-gnb
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    volumes:
+      - ./gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+      - ../flexric/flexric/:/usr/local/lib/flexric/
+    command: >
+      /opt/oai-gnb/bin/nr-softmodem -O /opt/oai-gnb/etc/gnb.conf -E --rfsim --log_config.global_log_options level,nocolor,time --MACRLCs.[0].local_n_address 192.168.72.3 --MACRLCs.[0].remote_n_address oai-cucp --MACRLCs.[0].local_n_address_f1u 192.168.73.3
+    networks:
+      rfsim5g-oai-f1c-net:
+        ipv4_address: 192.168.72.3
+      rfsim5g-oai-f1u-1-net:
+        ipv4_address: 192.168.73.3
+      rfsim5g-oai-ue-net:
+        ipv4_address: 192.168.78.2
+      rfsim5g-oai-e2-net:
+        ipv4_address: 192.168.70.151
+networks:
+  rfsim5g-oai-core-net:
+    external: true
+    name: rfsim5g-oai-core-net
+  rfsim5g-oai-traffic-net:
+    external: true
+    name: rfsim5g-oai-traffic-net
+  rfsim5g-oai-f1c-net:
+    external: true
+    name: rfsim5g-oai-f1c-net
+  rfsim5g-oai-f1u-1-net:
+    external: true
+    name: rfsim5g-oai-f1u-1-net
+  rfsim5g-oai-f1u-2-net:
+    external: true
+    name: rfsim5g-oai-f1u-2-net
+  rfsim5g-oai-f1u-3-net:
+    external: true
+    name: rfsim5g-oai-f1u-3-net
+  rfsim5g-oai-e1-net:
+    external: true
+    name: rfsim5g-oai-e1-net
+  rfsim5g-oai-ue-net:
+    external: true
+    name: rfsim5g-oai-ue-net
+  rfsim5g-oai-e2-net:
+    external: true
+    name: rfsim5g-oai-e2-net
