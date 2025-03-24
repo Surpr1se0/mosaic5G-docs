@@ -19,6 +19,8 @@ Welcome to the docs of the **Mosaic5G/Openairinterface**, which **currently** se
 
 The following repository contains (currently):
 - Wiki
+- **Scenario 3**: CU + DU + FlexRIC + CN
+- **Scenario 4**: CUCP + CUUP + DU + FlexRIC + CN
 - *to come soon...*
 - ...
 
