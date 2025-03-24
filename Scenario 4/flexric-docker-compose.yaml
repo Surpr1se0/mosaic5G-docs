@@ -1,0 +1,21 @@
+services:
+    oai-flexric:
+        image: ${REGISTRY:-oaisoftwarealliance}/oai-flexric:${FLEXRIC_TAG:-develop}
+        container_name: oai-flexric
+        networks:
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.150
+        volumes:
+            - ./conf/flexric.conf:/usr/local/etc/flexric/flexric.conf
+            - sharedXappLibs:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nearRT-RIC"
+            interval: 10s
+            timeout: 5s
+
+volumes:
+    sharedXappLibs:
+
+networks:
+    rfsim5g-oai-e2-net:
+        external: true:q
