@@ -19,9 +19,16 @@ Welcome to the docs of the **Mosaic5G/Openairinterface**, which **currently** se
 
 The following repository contains (currently):
 - Wiki
-- **Scenario 3**: CU + DU + FlexRIC + CN
-- **Scenario 4**: CUCP + CUUP + DU + FlexRIC + CN
-- *to come soon...*
+- Cenarios for **OpenAirInterface** implementation:
+
+| **Cenário**    | **Componentes**                 |
+| -------------- | ------------------------------- |
+| Scenario 3     | CU + DU + FlexRIC + CN          |
+| Scenario 4     | CUCP + CUUP + DU + FlexRIC + CN |
+| Monolithic     | " Same nodes on 1 VM            |
+| Disaggregated Cell-Based | " Same node on 4 Different Machines, with UE cell-based version                             |
+| Disaggregated Cell-Free | " Same node on 4 Different Machines, with UE cell-Free version                               |
+
 - ...
 
 ## Wiki
