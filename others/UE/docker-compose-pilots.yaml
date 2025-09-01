@@ -1,0 +1,554 @@
+services:
+    oai-nr-ue1:
+        image: oai-nr-ue:logger-2 
+        container_name: rfsim5g-oai-nr-ue1
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001100
+                                    --uicc0.nssai_sst 1
+                                    --rfsimulator.serveraddrs 192.168.78.7,192.168.78.6
+                                    --rfsimulator.options chanmod
+        networks:
+            rfsim5g-oai-ue-net1:
+                ipv4_address: 192.168.78.2
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+          
+    oai-nr-ue2:   
+        image: oai-nr-ue:logger-2
+        container_name: rfsim5g-oai-nr-ue2  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001101
+                                    --uicc0.nssai_sst 1
+                                    --rfsimulator.serveraddrs 192.168.78.7,192.168.78.6
+                                    --rfsimulator.options chanmod  
+        networks:
+            rfsim5g-oai-ue-net1:
+                ipv4_address: 192.168.78.3
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue3:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue3  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001102 
+                                    --uicc0.nssai_sst 1
+                                    --rfsimulator.serveraddr 192.168.78.6  
+        networks:
+            rfsim5g-oai-ue-net1:
+                ipv4_address: 192.168.78.4
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue4:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue4  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001103 
+                                    --uicc0.nssai_sst 1
+                                    --rfsimulator.serveraddr 192.168.78.6  
+        networks:
+            rfsim5g-oai-ue-net1:
+                ipv4_address: 192.168.78.5
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue5:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue5  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001104 
+                                    --uicc0.nssai_sst 1
+                                    --rfsimulator.serveraddr 192.168.78.6  
+        networks:
+            rfsim5g-oai-ue-net1:  
+                ipv4_address: 192.168.78.16
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue6:   
+        image: oai-nr-ue:logger-2
+        container_name: rfsim5g-oai-nr-ue6  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001105 
+                                    --uicc0.nssai_sst 2
+                                    --rfsimulator.serveraddrs 192.168.79.7,192.168.79.6  
+                                    --rfsimulator.options chanmod
+        networks:
+            rfsim5g-oai-ue-net2:  
+                ipv4_address: 192.168.79.3  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue7:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue7  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001106 
+                                    --uicc0.nssai_sst 2
+                                    --rfsimulator.serveraddr 192.168.79.6  
+        networks:
+            rfsim5g-oai-ue-net2:  
+                ipv4_address: 192.168.79.4  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue8:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue8  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001107  
+                                    --uicc0.nssai_sst 2
+                                    --rfsimulator.serveraddr 192.168.79.6  
+        networks:
+            rfsim5g-oai-ue-net2:  
+                ipv4_address: 192.168.79.5  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue9:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue9  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001108   
+                                    --uicc0.nssai_sst 2  
+                                    --rfsimulator.serveraddr 192.168.79.6  
+        networks:
+            rfsim5g-oai-ue-net2:  
+                ipv4_address: 192.168.79.7  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue10:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue10  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001109    
+                                    --uicc0.nssai_sst 2  
+                                    --rfsimulator.serveraddr 192.168.79.6  
+        networks:
+            rfsim5g-oai-ue-net2:  
+                ipv4_address: 192.168.79.9  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue11:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue11  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001110
+                                    --uicc0.key fec86ba6eb707ed08905757b1bb44b8f 
+                                    --uicc0.opc C42449363BBAD02B66D16BC975D77CC1
+                                    --rfsimulator.serveraddr 192.168.81.6  
+        networks:
+            rfsim5g-oai-ue-net3:  
+                ipv4_address: 192.168.81.4  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue12:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue12  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001111
+                                    --uicc0.key fec86ba6eb707ed08905757b1bb44b8f
+                                    --uicc0.opc C42449363BBAD02B66D16BC975D77CC1
+                                    --rfsimulator.serveraddr 192.168.81.6  
+        networks:
+            rfsim5g-oai-ue-net3:  
+                ipv4_address: 192.168.81.5  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue13:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue13  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001112
+                                    --uicc0.key fec86ba6eb707ed08905757b1bb44b8f
+                                    --uicc0.opc C42449363BBAD02B66D16BC975D77CC1
+                                    --rfsimulator.serveraddr 192.168.81.6  
+        networks:
+            rfsim5g-oai-ue-net3:  
+                ipv4_address: 192.168.81.8  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue14:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue14  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001113
+                                    --uicc0.key fec86ba6eb707ed08905757b1bb44b8f
+                                    --uicc0.opc C42449363BBAD02B66D16BC975D77CC1
+                                    --rfsimulator.serveraddr 192.168.81.6  
+        networks:
+            rfsim5g-oai-ue-net3:  
+                ipv4_address: 192.168.81.9  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue15:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue15  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208990100001114
+                                    --uicc0.key fec86ba6eb707ed08905757b1bb44b8f
+                                    --uicc0.opc C42449363BBAD02B66D16BC975D77CC1
+                                    --rfsimulator.serveraddr 192.168.81.6  
+        networks:
+            rfsim5g-oai-ue-net3:  
+                ipv4_address: 192.168.81.10  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue16:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue16  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208920100001115
+                                    --uicc0.key fec86ba6eb707ed08905757b1bb44b8f
+                                    --uic00.opc C42449363BBAD02B66D16BC975D77CC1
+                                    --rfsimulator.serveraddr 192.168.82.6  
+        networks:
+            rfsim5g-oai-ue-net4:  
+                ipv4_address: 192.168.82.5  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue17:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue17  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208930000000002
+                                    --rfsimulator.serveraddr 192.168.83.6  
+        networks:
+            rfsim5g-oai-ue-net5:  
+                ipv4_address: 192.168.83.2  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue18:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue18  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208930000000003
+                                    --rfsimulator.serveraddr 192.168.83.6  
+        networks:
+            rfsim5g-oai-ue-net5:  
+                ipv4_address: 192.168.83.3  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+  
+    oai-nr-ue19:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue19  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208930000000004
+                                    --rfsimulator.serveraddr 192.168.83.6  
+        networks:
+            rfsim5g-oai-ue-net5:  
+                ipv4_address: 192.168.83.4  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-nr-ue20:   
+        image: ${REGISTRY:-oaisoftwarealliance}/${NRUE_IMG:-oai-nr-ue}:${TAG:-develop}
+        container_name: rfsim5g-oai-nr-ue20  
+        cap_add:
+            - NET_ADMIN 
+            - NET_RAW
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,nocolor,time
+                                    -r 106 --numerology 1 -C 3619200000
+                                    --uicc0.imsi 208930000000005
+                                    --rfsimulator.serveraddr 192.168.83.6  
+        networks:
+            rfsim5g-oai-ue-net5:  
+                ipv4_address: 192.168.83.5  
+        devices:
+             - /dev/net/tun:/dev/net/tun
+        volumes:
+            - ../../conf_files/nrue.uicc.conf:/opt/oai-nr-ue/etc/nr-ue.conf
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-uesoftmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+networks:
+    rfsim5g-oai-core-net:
+      external: true
+      name: rfsim5g-oai-core-net
+    rfsim5g-oai-traffic-net:
+      external: true
+      name: rfsim5g-oai-traffic-net
+    rfsim5g-oai-f1c-net:
+      external: true
+      name: rfsim5g-oai-f1c-net
+    rfsim5g-oai-f1u-1-net:
+      external: true
+      name: rfsim5g-oai-f1u-1-net 
+    rfsim5g-oai-f1u-2-net:
+      external: true
+      name: rfsim5g-oai-f1u-2-net
+    rfsim5g-oai-f1u-3-net:
+      external: true
+      name: rfsim5g-oai-f1u-3-net
+    rfsim5g-oai-f1u-4-net:
+      external: true
+      name: rfsim5g-oai-f1u-4-net
+    rfsim5g-oai-f1u-5-net:
+      external: true
+      name: rfsim5g-oai-f1u-5-net
+    rfsim5g-oai-e1-net:
+      external: true
+      name: rfsim5g-oai-e1-net
+    rfsim5g-oai-ue-net1:
+      external: true
+      name: rfsim5g-oai-ue-net1
+    rfsim5g-oai-ue-net2:
+      external: true
+      name: rfsim5g-oai-ue-net2
+    rfsim5g-oai-ue-net3:
+      external: true
+      name: rfsim5g-oai-ue-net3
+    rfsim5g-oai-ue-net4:
+      external: true
+      name: rfsim5g-oai-ue-net4
+    rfsim5g-oai-ue-net5:
+      external: true
+      name: rfsim5g-oai-ue-net5
+    rfsim5g-oai-e2-net:
+      external: true
+      name: rfsim5g-oai-e2-net
+
+

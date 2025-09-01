@@ -1,0 +1,68 @@
+volumes:
+  flexric-db:
+  grafana-storage:
+  sharedXappLibs:
+  
+services:
+  flexric:
+    image: oai-flexric:se-pusch
+    container_name: oai-flexric
+    volumes:
+      - ./flexric/docker/flexric.conf:/usr/local/etc/flexric/flexric.conf
+      - flexric-db:/tmp/flexric/
+      - ../xapp-results:/mnt/results
+    networks:
+      rfsim5g-oai-e2-net:
+        ipv4_address: 192.168.70.150
+
+  xapp_pdcp_ctrl:
+    image: oai-flexric:latest
+    command: "stdbuf -o0 /usr/local/flexric/xApp/c/custom/xapp_pdcp_ctrl"
+    container_name: xapp-pdcp-ctrl
+    depends_on:
+            - flexric
+    networks:
+      rfsim5g-oai-e2-net:
+        ipv4_address: 192.168.70.152
+    volumes:
+      - ./flexric/docker/flexric.conf:/usr/local/etc/flexric/flexric.conf
+      - flexric-db:/tmp/flexric/
+
+  xapp_throughput:
+    image: oai-flexric:latest
+    command: "stdbuf -o0 /usr/local/flexric/xApp/c/custom/xapp_throughput"
+    container_name: xapp_throughput
+    depends_on:
+            - flexric
+    networks:
+      rfsim5g-oai-e2-net:
+        ipv4_address: 192.168.70.153
+    volumes:
+      - ./flexric/docker/flexric.conf:/usr/local/etc/flexric/flexric.conf
+      - flexric-db:/tmp/flexric/
+
+  xapp_total_throughput:
+    image: oai-flexric:latest
+    command: "stdbuf -o0 /usr/local/flexric/xApp/c/custom/xapp_total_throughput"
+    container_name: xapp_total_throughput
+    depends_on:
+            - flexric
+    networks:
+      rfsim5g-oai-e2-net:
+        ipv4_address: 192.168.70.154
+    volumes:
+      - ./flexric/docker/flexric.conf:/usr/local/etc/flexric/flexric.conf
+      - flexric-db:/tmp/flexric/
+
+
+networks:
+  rfsim5g-oai-e2-net:
+    external: true
+    name: rfsim5g-oai-e2-net
+  grafana-net:
+    driver: bridge
+    name: grafana-net
+    ipam:
+      config:
+        - subnet: 10.1.1.0/26
+

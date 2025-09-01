@@ -1,0 +1,580 @@
+services:
+    oai-cucp:
+        image: oai-cucp:flexric
+        container_name: rfsim5g-oai-cucp
+        environment:
+            USE_ADDITIONAL_OPTIONS: --log_config.global_log_options level,time
+                                    --gNBs.[0].E1_INTERFACE.[0].ipv4_cucp 192.168.77.2
+                                    --gNBs.[0].local_s_address 192.168.72.2
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-core-net:
+                ipv4_address: 192.168.71.150
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.2
+            rfsim5g-oai-e1-net:
+                ipv4_address: 192.168.77.2
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.2
+        volumes:
+            - ../../conf_files/gnb-cucp.sa.f1.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-cuup:
+        image: oai-cuup:flexric
+        container_name: rfsim5g-oai-cuup
+        cap_drop:
+            - ALL
+        environment:
+            USE_ADDITIONAL_OPTIONS: --log_config.global_log_options level,time
+                                    --gNBs.[0].E1_INTERFACE.[0].ipv4_cucp 192.168.77.2
+                                    --gNBs.[0].E1_INTERFACE.[0].ipv4_cuup 192.168.77.3
+                                    --gNBs.[0].local_s_address 192.168.73.2
+                                    --gNBs.[0].remote_s_address 127.0.0.1
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-core-net:
+                ipv4_address: 192.168.71.161
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.2
+            rfsim5g-oai-e1-net:
+                ipv4_address: 192.168.77.3
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.3
+        volumes:
+            - ../../conf_files/gnb-cuup.sa.f1.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/ 
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-cuup"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du1: 
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du1 
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe10
+                                    --gNBs.[0].gNB_DU_ID 0xe10                       
+                                    --MACRLCs.[0].local_n_address 192.168.72.4      
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2 
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.3  
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.4
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.3
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.10
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.13
+        ports:
+          - "2021:2021/tcp"
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du2:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du2  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe20
+                                    --gNBs.[0].gNB_DU_ID 0xe20
+                                    --gNBs.[0].nr_cellid 1
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 1
+                                    --MACRLCs.[0].local_n_address 192.168.72.5            
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.4
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.5 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.4 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.20 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.14 
+        ports:
+          - "2022:2022/tcp"
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du3:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du3  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe30
+                                    --gNBs.[0].gNB_DU_ID 0xe30                                          
+                                    --gNBs.[0].nr_cellid 2  
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 2
+                                    --MACRLCs.[0].local_n_address 192.168.72.6           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.5        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.6 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.5 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.30 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.15 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du4:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du4  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time              
+                                    --gNBs.[0].gNB_ID 0xe40
+                                    --gNBs.[0].gNB_DU_ID 0xe40
+                                    --gNBs.[0].nr_cellid 3
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 3
+                                    --MACRLCs.[0].local_n_address 192.168.72.7           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.6        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.7 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.6 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.40 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.16 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+ 
+    oai-du5:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du5  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe50
+                                    --gNBs.[0].gNB_DU_ID 0xe50
+                                    --gNBs.[0].nr_cellid 4
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 4
+                                    --MACRLCs.[0].local_n_address 192.168.72.8           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.7        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.8 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.7 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.50 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.17 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du6:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du6  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe05
+                                    --gNBs.[0].gNB_DU_ID 0xe05 
+                                    --gNBs.[0].nr_cellid 5
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 5
+                                    --MACRLCs.[0].local_n_address 192.168.72.9           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.8        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.9 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.8 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.60 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.18 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du7:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du7  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time              
+                                    --gNBs.[0].gNB_ID 0xe06
+                                    --gNBs.[0].gNB_DU_ID 0xe06
+                                    --gNBs.[0].nr_cellid 6
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 6
+                                    --MACRLCs.[0].local_n_address 192.168.72.10           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.9        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.10 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.9 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.70 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.19 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du8:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du8  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe10
+                                    --gNBs.[0].gNB_DU_ID 0xe07 
+                                    --gNBs.[0].nr_cellid 7
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 7
+                                    --MACRLCs.[0].local_n_address 192.168.72.11           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.10        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.11 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.10 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.80 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.20 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du9:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du9  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe08
+                                    --gNBs.[0].gNB_DU_ID 0xe08
+                                    --gNBs.[0].nr_cellid 8
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 8
+                                    --MACRLCs.[0].local_n_address 192.168.72.12           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.11        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.12 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.11 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.90 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.21 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    oai-du10:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du10  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe09
+                                    --gNBs.[0].gNB_DU_ID 0xe09
+                                    --gNBs.[0].nr_cellid 9
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 9
+                                    --MACRLCs.[0].local_n_address 192.168.72.13           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.12        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.13 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.12 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.100 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.22 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5            
+
+    oai-du11:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du11  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe60
+                                    --gNBs.[0].gNB_DU_ID 0xe60 
+                                    --gNBs.[0].nr_cellid 10
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 10
+                                    --MACRLCs.[0].local_n_address 192.168.72.14           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.13        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.14 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.13 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.110 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.23 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5   
+
+    oai-du12:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du12  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time            
+                                    --gNBs.[0].gNB_ID 0xe70
+                                    --gNBs.[0].gNB_DU_ID 0xe70 
+                                    --gNBs.[0].nr_cellid 11
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 11
+                                    --MACRLCs.[0].local_n_address 192.168.72.15           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.14        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.15 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.14 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.120 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.24 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5   
+
+    oai-du13:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du13  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe80
+                                    --gNBs.[0].gNB_DU_ID 0xe80
+                                    --gNBs.[0].nr_cellid 12
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 12
+                                    --MACRLCs.[0].local_n_address 192.168.72.16           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.15        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.16 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.15 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.130 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.25 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5   
+
+    oai-du14:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du14  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe90
+                                    --gNBs.[0].gNB_DU_ID 0xe90 
+                                    --gNBs.[0].nr_cellid 13
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 13
+                                    --MACRLCs.[0].local_n_address 192.168.72.17           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.16        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.17 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.16 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.140 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.26 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5  
+
+    oai-du15:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du15  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time
+                                    --gNBs.[0].gNB_ID 0xe100
+                                    --gNBs.[0].gNB_DU_ID 0xe100
+                                    --gNBs.[0].nr_cellid 14
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 14
+                                    --MACRLCs.[0].local_n_address 192.168.72.18           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.17        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.18 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.17 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.150 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.27 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5  
+
+    oai-du16:  
+        image: oai-du:flexric
+        container_name: rfsim5g-oai-du16  
+        environment:
+            USE_ADDITIONAL_OPTIONS: --rfsim --log_config.global_log_options level,time  
+                                    --gNBs.[0].gNB_ID 0xe252
+                                    --gNBs.[0].gNB_DU_ID 0xe252
+                                    --gNBs.[0].nr_cellid 15
+                                    --gNBs.[0].servingCellConfigCommon.[0].physCellId 15
+                                    --MACRLCs.[0].local_n_address 192.168.72.19           
+                                    --MACRLCs.[0].remote_n_address 192.168.72.2           
+                                    --MACRLCs.[0].local_n_address_f1u 192.168.73.18        
+            ASAN_OPTIONS: detect_leaks=0
+        networks:
+            rfsim5g-oai-f1c-net:
+                ipv4_address: 192.168.72.19 
+            rfsim5g-oai-f1u-1-net:
+                ipv4_address: 192.168.73.18 
+            rfsim5g-oai-ue-net:
+                ipv4_address: 192.168.78.160 
+            rfsim5g-oai-e2-net:
+                ipv4_address: 192.168.70.28 
+        volumes:
+            - ../../conf_files/gnb-du.sa.band78.106prb.rfsim.conf:/opt/oai-gnb/etc/gnb.conf
+            - ./libs/:/usr/local/lib/flexric/
+        healthcheck:
+            test: /bin/bash -c "pgrep nr-softmodem"
+            interval: 10s
+            timeout: 5s
+            retries: 5  
+
+networks:
+    rfsim5g-oai-core-net:
+      external: true
+      name: rfsim5g-oai-core-net
+    rfsim5g-oai-traffic-net:
+      external: true
+      name: rfsim5g-oai-traffic-net
+    rfsim5g-oai-f1c-net:
+      external: true
+      name: rfsim5g-oai-f1c-net
+    rfsim5g-oai-f1u-1-net:
+      external: true
+      name: rfsim5g-oai-f1u-1-net
+    rfsim5g-oai-e1-net:
+      external: true
+      name: rfsim5g-oai-e1-net
+    rfsim5g-oai-ue-net:
+      external: true
+      name: rfsim5g-oai-ue-net
+    rfsim5g-oai-e2-net:
+      external: true
+      name: rfsim5g-oai-e2-net
+
+
+
