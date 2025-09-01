@@ -1,0 +1,147 @@
+root@ubuntu24:/home/admin# ./startup-script-ue.sh
+[INFO] UE starting up...
+[UTIL]   running in SA mode (no --phy-test, --do-ra, --nsa option present)
+[UTIL]   threadCreate() for Tpool0_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool1_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool2_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool3_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool4_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool5_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool6_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool7_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool8_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool9_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool10_-1: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for Tpool11_-1: creating thread with affinity ffffffff, priority 97
+[OPT]   OPT disabled
+[HW]   Version: Branch: develop Abrev. Hash: ff58b5e169 Date: Wed Feb 12 06:55:05 2025 +0000
+
+[UTIL]   Opened socket oaitun_ue1 with fd nas_sock_fd[0]=93
+[PDCP]   UE pdcp will use tun interface
+[SIM]   UICC simulation: IMSI=208990100001100, IMEISV=6754567890123413, Ki=fec86ba6eb707ed08905757b1bb44b8f, OPc=C42449363BBAD02B66D16BC975D77CC1, DNN=oai, SST=0x01, SD=0xffffff
+
+[NR_MAC]   [UE0] Initializing MAC
+[NR_MAC]   Initializing dl and ul config_request. num_slots = 20
+
+[RLC]   Activated srb0 for UE 0
+[RLC]   SRB0 already exists for UE 0, do nothing
+
+[PHY]   Set UE_fo_compensation 0, UE_scan_carrier 0, UE_no_timing_correction 0
+, chest-freq 0, chest-time 0
+[PHY]   Set UE nb_rx_antenna 1, nb_tx_antenna 1, threequarter_fs 0, ssb_start_subcarrier 516
+[PHY]   SA init parameters. DL freq 3319680000 UL offset 0 SSB numerology 1 N_RB_DL 106
+[PHY]   Init: N_RB_DL 106, first_carrier_offset 1412, nb_prefix_samples 144,nb_prefix_samples0 176, ofdm_symbol_size 2048
+[PHY]   samples_per_subframe 61440/per second 61440000, wCP 57344
+[UTIL]   threadCreate() for SYNC__actor: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for DL__actor: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for DL__actor: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for DL__actor: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for DL__actor: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for UL__actor: creating thread with affinity ffffffff, priority 97
+[PHY]   Initializing UE vars for gNB TXant 1, UE RXant 1
+[PHY]   prs_config configuration NOT found..!! Skipped configuring UE for the PRS reception
+[PHY]   UE 0 Setting N_TA_offset to 800 samples (UL Freq 3319680000, N_RB 106, mu 1)
+[PHY]   HW: Configuring card 0, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 1, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 2, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 3, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 4, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 5, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 6, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   HW: Configuring card 7, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680000 Hz, rx_freq 3319680000 Hz, tune_offset 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+[PHY]   Intializing UE Threads for instance 0 ...
+[UTIL]   threadCreate() for UEthread_0: creating thread with affinity ffffffff, priority 97
+[UTIL]   threadCreate() for L1_UE_stats_0: creating thread with affinity ffffffff, priority 1
+[HW]   Running as client: will connect to a rfsimulator server side
+
+[HW]   [RRU] has loaded RFSIMULATOR device.
+[HW]   Trying to connect to 127.0.0.1:4043
+[NR_RRC]   create TASK_RRC_NRUE
+[UTIL]   threadCreate() for TASK_RRC_NRUE: creating thread with affinity ffffffff, priority 50
+[HW]   Connection to 127.0.0.1:4043 established
+[UTIL]   threadCreate() for TASK_NAS_NRUE: creating thread with affinity ffffffff, priority 50
+
+[PHY]   SSB position provided
+[NR_PHY]   Starting sync detection
+[PHY]   [UE thread Synch] Running Initial Synch
+[NR_PHY]   Starting cell search with center freq: 3319680000, bandwidth: 106. Scanning for 1 number of GSCN.
+[NR_PHY]   Scanning GSCN: 0, with SSB offset: 516, SSB Freq: 0.000000
+[PHY]   Initial sync: pbch decoded sucessfully, ssb index 0
+
+[PHY]   pbch rx ok. rsrp:51 dB/RE, adjust_rxgain:-1 dB
+[NR_PHY]   Cell Detected with GSCN: 0, SSB SC offset: 516, SSB Ref: 0.000000, PSS Corr peak: 99 dB, PSS Corr Average: 61
+[PHY]   [UE0] In synch, rx_offset 552960 samples
+[PHY]   [UE 0] Measured Carrier Frequency offset 5 Hz
+[PHY]   Initial sync successful, PCI: 0
+[PHY]   HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3319680005 Hz, rx_freq 3319680005 Hz, tune_offset 0
+[PHY]   Got synch: hw_slot_offset 36, carrier off 5 Hz, rxgain 0.000000 (DL 3319680005.000000 Hz, UL 3319680005.000000 Hz)
+[PHY]   UE synchronized! decoded_frame_rx=14 UE->init_sync_frame=1 trashed_frames=10
+[PHY]   Resynchronizing RX by 552960 samples
+[HW]   received write reorder clear context
+[HW]   Gap in writing to USRP: last written 1274265599, now 1274356959, gap 91360
+
+[NR_RRC]   SIB1 decoded
+
+[MAC]   Initialization of 4-Step CBRA procedure
+[NR_MAC]   PRACH scheduler: Selected RO Frame 151, Slot 19, Symbol 0, Fdm 0
+[PHY]   PRACH [UE 0] in frame.slot 151.19, placing PRACH in position 2828, Msg1/MsgA-Preamble frequency start 0 (k1 0), preamble_offset 6, first_nonzero_root_idx 0, preambleIndex = 33
+[NR_MAC]   [UE 0][RAPROC][RA-RNTI 0005] Got BI RAR subPDU 267 ms
+[NR_MAC]   [UE 0][RAPROC][RA-RNTI 010b] Got RAPID RAR subPDU
+[NR_MAC]   [UE 0][RAPROC][152.7] Found RAR with the intended RAPID 33
+[MAC]   received TA command 31
+[PHY]   RAR-Msg2 decoded
+[NR_MAC]   [RAPROC][152.17] RA-Msg3 transmitted
+[MAC]   [UE 0]Frame 153 Contention resolution identity: 0x1a130d588586 Terminating RA procedure
+[MAC]   [UE 0][153.10][RAPROC] 4-Step RA procedure succeeded. CBRA: Contention Resolution is successful.
+[NR_RRC]   [UE0][RAPROC] Logical Channel DL-CCCH (SRB0), Received NR_RRCSetup
+[RLC]   Added srb 1 to UE 0
+[NR_RRC]   State = NR_RRC_CONNECTED
+[NR_RRC]   [UE 0][RAPROC] Logical Channel UL-DCCH (SRB1), Generating RRCSetupComplete (bytes33)
+[MAC]   [UE 0] Applying CellGroupConfig from gNodeB
+
+[NR_MAC]   UE 0 stats sfn: 256.8, cumulated bad DCI 0
+    DL harq: 3/0
+    Ul harq: 13/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.2, nb symbols 9.9)
+[NR_MAC]   UE 0 stats sfn: 384.8, cumulated bad DCI 0
+    DL harq: 4/0
+    Ul harq: 26/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.1, nb symbols 11.5)
+[NR_MAC]   UE 0 stats sfn: 512.8, cumulated bad DCI 0
+    DL harq: 5/0
+    Ul harq: 39/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.1, nb symbols 12.0)
+[NR_MAC]   UE 0 stats sfn: 640.8, cumulated bad DCI 0
+    DL harq: 6/0
+    Ul harq: 52/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.1, nb symbols 12.2)
+[NR_MAC]   UE 0 stats sfn: 768.8, cumulated bad DCI 0
+    DL harq: 8/0
+    Ul harq: 65/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.0, nb symbols 12.4)
+[NR_MAC]   UE 0 stats sfn: 896.8, cumulated bad DCI 0
+    DL harq: 9/0
+    Ul harq: 77/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.0, nb symbols 12.5)
+[NR_MAC]   UE 0 stats sfn: 0.8, cumulated bad DCI 0
+    DL harq: 10/0
+    Ul harq: 90/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.0, nb symbols 12.6)
+[NR_MAC]   UE 0 stats sfn: 128.8, cumulated bad DCI 0
+    DL harq: 11/0
+    Ul harq: 103/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.0, nb symbols 12.6)
+[NR_MAC]   UE 0 stats sfn: 256.8, cumulated bad DCI 0
+    DL harq: 13/0
+    Ul harq: 116/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.0, nb symbols 12.7)
+[NR_MAC]   UE 0 stats sfn: 384.8, cumulated bad DCI 0
+    DL harq: 14/0
+    Ul harq: 129/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.0, nb symbols 12.7)

@@ -1,0 +1,387 @@
+admin@ubuntu24:~/openairinterface5g/ci-scripts/yaml_files/5g_rfsimulator_e1$ docker logs rfsim5g-oai-nr-ue
+==================================
+/proc/sys/kernel/core_pattern=|/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -- %E
+==================================
+== Configuration file:
+uicc0 = {
+  imsi = "208990100001100";
+  key = "fec86ba6eb707ed08905757b1bb44b8f";
+  opc= "C42449363BBAD02B66D16BC975D77CC1";
+  dnn= "oai";
+  nssai_sst=1;
+}
+
+position0 = {
+    x = 0.0;
+    y = 0.0;
+    z = 6377900.0;
+}
+
+thread-pool = "-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1"
+
+#/* configuration for channel modelisation */
+#/* To be included in main config file when */
+#/* channel modelisation is used (rfsimulator with chanmod options enabled) */
+channelmod = {
+  max_chan = 10;
+  modellist = "modellist_rfsimu_1";
+  modellist_rfsimu_1 = (
+    { # DL, modify on UE side
+      model_name     = "rfsimu_channel_enB0"
+      type           = "AWGN";
+      ploss_dB       = 20;
+      noise_power_dB = -4;
+      forgetfact     = 0;
+      offset         = 0;
+      ds_tdl         = 0;
+    },
+    { # UL, modify on gNB side
+      model_name     = "rfsimu_channel_ue0"
+      type           = "AWGN";
+      ploss_dB       = 20;
+      noise_power_dB = -2;
+      forgetfact     = 0;
+      offset         = 0;
+      ds_tdl         = 0;
+    }
+  );
+};
+==================================
+== Load USRP binaries
+==================================
+== Starting NR UE soft modem
+Additional option(s): --rfsim --log_config.global_log_options level,nocolor,time -r 106 --numerology 1 -C 3619200000 --uicc0.imsi 208990100001100 --rfsimulator.serveraddr 192.168.78.5
+/opt/oai-nr-ue/bin/nr-uesoftmodem -O /opt/oai-nr-ue/etc/nr-ue.conf --rfsim --log_config.global_log_options level,nocolor,time -r 106 --numerology 1 -C 3619200000 --uicc0.imsi 208990100001100 --rfsimulator.serveraddr 192.168.78.5
+632079.595902 [UTIL] I running in SA mode (no --phy-test, --do-ra, --nsa option present)
+632079.595926 [UTIL] I threadCreate() for Tpool0_-1: creating thread (no affinity, default priority)
+632079.596119 [UTIL] I threadCreate() for Tpool1_-1: creating thread (no affinity, default priority)
+632079.596204 [UTIL] I threadCreate() for Tpool2_-1: creating thread (no affinity, default priority)
+632079.596293 [UTIL] I threadCreate() for Tpool3_-1: creating thread (no affinity, default priority)
+632079.596428 [UTIL] I threadCreate() for Tpool4_-1: creating thread (no affinity, default priority)
+632079.597998 [UTIL] I threadCreate() for Tpool5_-1: creating thread (no affinity, default priority)
+632079.598391 [UTIL] I threadCreate() for Tpool6_-1: creating thread (no affinity, default priority)
+632079.598657 [UTIL] I threadCreate() for Tpool7_-1: creating thread (no affinity, default priority)
+632079.598925 [UTIL] I threadCreate() for Tpool8_-1: creating thread (no affinity, default priority)
+632079.599363 [UTIL] I threadCreate() for Tpool9_-1: creating thread (no affinity, default priority)
+632079.599523 [UTIL] I threadCreate() for Tpool10_-1: creating thread (no affinity, default priority)
+632079.599591 [UTIL] I threadCreate() for Tpool11_-1: creating thread (no affinity, default priority)
+632079.601060 [UTIL] W no SYS_NICE capability: cannot set thread priority and affinity, consider running with sudo for optimum performance
+632080.601977 [OPT] I OPT disabled
+632080.602589 [HW] I Version: Branch: develop Abrev. Hash: 6d9c2c35b8 Date: Tue Feb 18 11:37:07 2025 +0000
+632080.611925 [HW] I  PHY_vars_UE_g[0][0]->Mod_id= 0 ||| inst= 0
+632080.619825 [HW] I  PHY_vars_UE_g[1][0]->Mod_id= 1 ||| inst= 1
+632080.619867 [HW] I [DEBUG] Node-number: 0
+632080.621176 [UTIL] I Opened socket oaitun_ue1 with fd nas_sock_fd[0]=93
+632080.621212 [PDCP] I UE pdcp will use tun interface
+632080.621355 [HW] I [NAS] Initializing NAS info for UE 0
+632080.621428 [SIM] E Mod_id must be less than NB_UE_INST. Mod_id:0 NB_UE_INST:1632080.621621 [SIM] I UICC simulation: IMSI=208990100001100, IMEISV=6754567890123413, Ki=fec86ba6eb707ed08905757b1bb44b8f, OPc=C42449363BBAD02B66D16BC975D77CC1, DNN=oai, SST=0x01, SD=0xffffff
+632080.621663 [HW] I [NAS] Done UE 0
+632080.621673 [HW] I [DEBUG] Node-number: 1!
+632080.621679 [HW] I [DEBUG] NOT Calling init_pdcp(1)...
+632080.621686 [HW] I [DEBUG] init_NR_UE starting for NB=2
+632080.622073 [NR_MAC] I [UE0] Initializing MAC
+632080.627416 [NR_MAC] I Initializing dl and ul config_request. num_slots = 20
+632080.627585 [NR_MAC] I [UE1] Initializing MAC
+632080.632708 [NR_MAC] I Initializing dl and ul config_request. num_slots = 20
+632080.633116 [RLC] I Activated srb0 for UE 0
+632080.633190 [RLC] I Activated srb0 for UE 1
+632080.633199 [HW] I [DEBUG] nb_inst=2
+632080.633224 [HW] I [DEBUG] Entrou! nb_inst=2
+632080.633246 [RLC] W SRB0 already exists for UE 0, do nothing
+632080.633254 [HW] I [DEBUG] nb_inst=2
+632080.633261 [HW] I init_NR_UE done!632080.633267 [HW] I [DEBUG] Instância 0 no EMULATE L1
+632080.633277 [PHY] I Set UE_fo_compensation 0, UE_scan_carrier 0, UE_no_timing_correction 0
+, chest-freq 0, chest-time 0
+632080.633285 [PHY] I Set UE nb_rx_antenna 1, nb_tx_antenna 1, threequarter_fs 0, ssb_start_subcarrier 516
+632080.633346 [HW] I [DEBUG] Instância 0 no SL MODE
+632080.633369 [PHY] I SA init parameters. DL freq 3619200000 UL offset 0 SSB numerology 1 N_RB_DL 106
+632080.633379 [PHY] I Init: N_RB_DL 106, first_carrier_offset 1412, nb_prefix_samples 144,nb_prefix_samples0 176, ofdm_symbol_size 2048
+632080.633385 [PHY] W samples_per_subframe 61440/per second 61440000, wCP 57344
+632080.633392 [HW] I [DEBUG] Instância 0 no IF(INST == 0)
+632080.633410 [UTIL] I threadCreate() for SYNC__actor: creating thread (no affinity, default priority)
+632080.633814 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632080.634144 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632080.634359 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632080.634836 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632080.635060 [UTIL] I threadCreate() for UL__actor: creating thread (no affinity, default priority)
+632080.635359 [PHY] I Initializing UE vars for gNB TXant 1, UE RXant 1
+632080.801036 [PHY] I prs_config configuration NOT found..!! Skipped configuring UE for the PRS reception
+632081.127536 [PHY] I UE 0 Setting N_TA_offset to 800 samples (UL Freq 3619200000, N_RB 106, mu 1)
+632081.127566 [HW] I [DEBUG] Instância 1 no EMULATE L1
+632081.127574 [PHY] I Set UE_fo_compensation 0, UE_scan_carrier 0, UE_no_timing_correction 0
+, chest-freq 0, chest-time 0
+632081.127578 [PHY] I Set UE nb_rx_antenna 1, nb_tx_antenna 1, threequarter_fs 0, ssb_start_subcarrier 516
+632081.127592 [HW] I [DEBUG] Instância 1 no SL MODE
+632081.127595 [PHY] I SA init parameters. DL freq 3619200000 UL offset 0 SSB numerology 1 N_RB_DL 106
+632081.127602 [PHY] I Init: N_RB_DL 106, first_carrier_offset 1412, nb_prefix_samples 144,nb_prefix_samples0 176, ofdm_symbol_size 2048
+632081.127605 [PHY] W samples_per_subframe 61440/per second 61440000, wCP 57344
+632081.127608 [HW] I [DEBUG] Instância 1 no ELSE
+632081.127620 [UTIL] I threadCreate() for SYNC__actor: creating thread (no affinity, default priority)
+632081.127772 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632081.127846 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632081.127898 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632081.127952 [UTIL] I threadCreate() for DL__actor: creating thread (no affinity, default priority)
+632081.128058 [UTIL] I threadCreate() for UL__actor: creating thread (no affinity, default priority)
+
+
+
+632081.128133 [PHY] I Initializing UE vars for gNB TXant 1, UE RXant 1
+632081.141720 [PHY] I prs_config configuration NOT found..!! Skipped configuring UE for the PRS reception
+632081.659391 [PHY] I UE 1 Setting N_TA_offset to 800 samples (UL Freq 3619200000, N_RB 106, mu 1)
+632081.659426 [HW] W [DEBUG] Entered initOpenAir0
+632081.659431 [PHY] I HW: Configuring card 0, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661059 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661077 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661082 [PHY] I HW: Configuring card 1, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661085 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661088 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661091 [PHY] I HW: Configuring card 2, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661095 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661098 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661101 [PHY] I HW: Configuring card 3, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661104 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661106 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661109 [PHY] I HW: Configuring card 4, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661111 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661114 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661117 [PHY] I HW: Configuring card 5, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661120 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661122 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661125 [PHY] I HW: Configuring card 6, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661127 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661130 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661133 [PHY] I HW: Configuring card 7, sample_rate 61440000.000000, tx/rx num_channels 1/1, duplex_mode TDD
+632081.661137 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200000 Hz, rx_freq 3619200000 Hz, tune_offset 0
+632081.661141 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_gain 0, rx_gain 110
+632081.661143 [HW] W [DEBUG] Exited initOpenAir0
+632081.661158 [UTIL] W mlockall() failed: 12, Cannot allocate memory
+632081.661168 [PHY] I [DEBUG] Initializing UE Threads for instance 0 ...
+632081.661178 [UTIL] I threadCreate() for UEthread_0: creating thread (no affinity, default priority)
+632081.662743 [UTIL] I threadCreate() for L1_UE_stats_0: creating thread (no affinity, default priority)
+632081.664946 [PHY] I [DEBUG] Initializing UE Threads for instance 1 ...
+632081.664962 [UTIL] I threadCreate() for UEthread_1: creating thread (no affinity, default priority)
+632081.665294 [UTIL] I threadCreate() for L1_UE_stats_1: creating thread (no affinity, default priority)
+632081.665486 [NR_RRC] I create TASK_RRC_NRUE
+632081.665499 [UTIL] I threadCreate() for TASK_RRC_NRUE: creating thread (no affinity, default priority)
+632081.665593 [UTIL] I threadCreate() for TASK_NAS_NRUE: creating thread (no affinity, default priority)
+
+
+
+632081.664981 [HW] I [DEBUG] [device_init] Recebido Mod_id = 0632081.666107 [HW] I [DEBUG] [device_init] Recebido Mod_id = 1632081.666239 [HW] I [RFSIM] É cliente!
+632081.666259 [HW] I [RFSIM] [device_init] instância 0 => porta 4043
+632081.666265 [HW] I [RFSIM] [device_init] instância 0 => IP 192.168.78.2
+632081.666274 [HW] I Running as client: will connect to a rfsimulator server side
+632081.666511 [HW] I [RFSIM] É cliente!
+632081.666529 [HW] I [RFSIM] [device_init] instância 1 => porta 4044
+632081.666535 [HW] I [RFSIM] [device_init] instância 1 => IP 192.168.78.5
+632081.666540 [HW] I Running as client: will connect to a rfsimulator server side
+632081.667496 [HW] I [RRU] has loaded RFSIMULATOR device.
+632081.667520 [HW] I [RFSIM] startClient - porta inicial: 4044
+632081.667527 [HW] I Trying to connect to 192.168.78.5:4044
+632081.667806 [HW] I [RRU] has loaded RFSIMULATOR device.
+632081.667828 [HW] I [RFSIM] startClient - porta inicial: 4043
+632081.667833 [HW] I Trying to connect to 192.168.78.2:4043
+632081.669975 [HW] I Connection to 192.168.78.5:4044 established
+632081.672097 [HW] I Connection to 192.168.78.2:4043 established
+
+
+632085.720475 [PHY] W SSB position provided
+632085.720600 [NR_PHY] W Starting sync detection
+632085.720619 [PHY] I [UE thread Synch] Running Initial Synch
+632085.720624 [NR_PHY] I Starting cell search with center freq: 3619200000, bandwidth: 106. Scanning for 1 number of GSCN.
+632085.724100 [PHY] W SSB position provided
+632085.724213 [NR_PHY] W Starting sync detection
+632085.724402 [PHY] I [UE thread Synch] Running Initial Synch
+632085.724410 [NR_PHY] I Starting cell search with center freq: 3619200000, 
+bandwidth: 106. Scanning for 1 number of GSCN.
+
+632085.726396 [NR_PHY] I Scanning GSCN: 0, with SSB offset: 516, SSB Freq: 0.000000
+632085.733652 [NR_PHY] I Scanning GSCN: 0, with SSB offset: 516, SSB Freq: 0.000000
+632085.885294 [PHY] I Initial sync: pbch decoded sucessfully, ssb index 0
+632085.885325 [PHY] I pbch rx ok. rsrp:51 dB/RE, adjust_rxgain:-1 dB
+632085.885422 [NR_PHY] I Cell Detected with GSCN: 0, SSB SC offset: 516, SSB Ref: 0.000000, PSS Corr peak: 99 dB, PSS Corr Average: 61
+632085.885918 [PHY] I [UE1] In synch, rx_offset 552960 samples
+632085.885922 [PHY] I [UE 1] Measured Carrier Frequency offset 7 Hz
+632085.885924 [PHY] A Initial sync successful, PCI: 1
+
+
+632085.885927 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200007 Hz, rx_freq 3619200007 Hz, tune_offset 0
+632085.885935 [PHY] I Got synch: hw_slot_offset 36, carrier off 7 Hz, rxgain 0.000000 (DL 3619200007.000000 Hz, UL 3619200007.000000 Hz)
+632085.891522 [PHY] I Initial sync: pbch decoded sucessfully, ssb index 0
+632085.891541 [PHY] I pbch rx ok. rsrp:51 dB/RE, adjust_rxgain:-1 dB
+632085.891612 [NR_PHY] I Cell Detected with GSCN: 0, SSB SC offset: 516, SSB Ref: 0.000000, PSS Corr peak: 99 dB, PSS Corr Average: 61
+632085.892081 [PHY] I [UE0] In synch, rx_offset 109696 samples
+632085.892090 [PHY] I [UE 0] Measured Carrier Frequency offset 5 Hz
+632085.892092 [PHY] A Initial sync successful, PCI: 0
+
+
+632085.892095 [PHY] I HW: Configuring channel 0 (rf_chain 0): setting tx_freq 3619200005 Hz, rx_freq 3619200005 Hz, tune_offset 0
+632085.892102 [PHY] I Got synch: hw_slot_offset 7, carrier off 5 Hz, rxgain 0.000000 (DL 3619200005.000000 Hz, UL 3619200005.000000 Hz)
+632085.952484 [PHY] A UE synchronized! decoded_frame_rx=896 UE->init_sync_frame=1 UE->MOD_ID=1 trashed_frames=6
+632085.952556 [PHY] I Resynchronizing RX by 552960 samples
+632085.955435 [PHY] A UE synchronized! decoded_frame_rx=682 UE->init_sync_frame=1 UE->MOD_ID=0 trashed_frames=6
+632085.955456 [PHY] I Resynchronizing RX by 109696 samples
+632085.958567 [HW] I received write reorder clear context
+632085.972854 [NR_RRC] A SIB1 decoded
+632085.974855 [NR_MAC] I TDD period index = 6, based on the sum of dl_UL_TransmissionPeriodicity from Pattern1 (5.000000 ms) and Pattern2 (0.000000 ms): Total = 5.000000 ms
+632085.975885 [NR_MAC] I Set TDD configuration period to: 8 DL slots, 3 UL slots, 10 slots per period (NR_TDD_UL_DL_Pattern is 7 DL slots, 2 UL slots, 6 DL symbols, 4 UL symbols)
+632085.975893 [NR_MAC] I Configured 1 TDD patterns (total slots: pattern1 = 10, pattern2 = 0)
+632085.990941 [HW] I received write reorder clear context
+632085.994379 [NR_RRC] A SIB1 decoded
+632085.994783 [NR_MAC] I TDD period index = 6, based on the sum of dl_UL_TransmissionPeriodicity from Pattern1 (5.000000 ms) and Pattern2 (0.000000 ms): Total = 5.000000 ms
+632085.994800 [NR_MAC] I Set TDD configuration period to: 8 DL slots, 3 UL slots, 10 slots per period (NR_TDD_UL_DL_Pattern is 7 DL slots, 2 UL slots, 6 DL symbols, 4 UL symbols)
+632085.994802 [NR_MAC] I Configured 1 TDD patterns (total slots: pattern1 = 10, pattern2 = 0)
+632091.039034 [MAC] I Initialization of 4-Step CBRA procedure
+632091.062202 [NR_MAC] I PRACH scheduler: Selected RO Frame 823, Slot 19, Symbol 0, Fdm 0
+632091.062949 [PHY] I PRACH [UE 0] in frame.slot 823.19, placing PRACH in position 2828, Msg1/MsgA-Preamble frequency start 0 (k1 0), preamble_offset 12, first_nonzero_root_idx 0, preambleIndex = 49
+632091.087234 [NR_MAC] I [UE 0][RAPROC][RA-RNTI 0005] Got BI RAR subPDU 267 ms
+632091.087264 [NR_MAC] I [UE 0][RAPROC][RA-RNTI 010b] Got RAPID RAR subPDU
+632091.087269 [NR_MAC] A [UE 0][RAPROC][824.7] Found RAR with the intended RAPID 49
+632091.087275 [MAC] W received TA command 31
+632091.087305 [PHY] I RAR-Msg2 decoded
+
+
+632091.093038 [NR_MAC] A [RAPROC][824.17] RA-Msg3 transmitted
+632091.130597 [MAC] I [UE 0]Frame 825 Contention resolution identity: 0x1eb638f3f306 Terminating RA procedure
+632091.130629 [MAC] A [UE 0][825.10][RAPROC] 4-Step RA procedure succeeded. CBRA: Contention Resolution is successful.
+632091.130725 [NR_RRC] I [UE0][RAPROC] Logical Channel DL-CCCH (SRB0), Received NR_RRCSetup
+
+632091.134971 [RLC] I Added srb 1 to UE 0
+632091.135001 [NR_RRC] I State = NR_RRC_CONNECTED
+632091.135007 [NAS] I Generate Initial NAS Message: Registration Request
+632091.135043 [NR_RRC] I [UE 0][RAPROC] Logical Channel UL-DCCH (SRB1), Generating RRCSetupComplete (bytes33)
+632091.137475 [MAC] I [UE 0] Applying CellGroupConfig from gNodeB
+632091.347100 [NAS] I [UE 0] Received NAS_DOWNLINK_DATA_IND: length 42 , buffer 0x725c780026f0
+632091.376164 [NAS] I  nr_nas_msg.c:402  derive_kgnb  with count= 0
+632091.471907 [MAC] I Initialization of 4-Step CBRA procedure
+632091.485239 [NAS] I [UE 0] Received NAS_DOWNLINK_DATA_IND: length 21 , buffer 0x725c78003930
+632091.490689 [NAS] I Generate Initial NAS Message: Registration Request
+632091.499384 [NR_MAC] I PRACH scheduler: Selected RO Frame 23, Slot 19, Symbol 0, Fdm 0
+632091.500262 [PHY] I PRACH [UE 1] in frame.slot 23.19, placing PRACH in position 2828, Msg1/MsgA-Preamble frequency start 0 (k1 0), preamble_offset 13, first_nonzero_root_idx 0, preambleIndex = 55
+632091.524834 [NR_MAC] I [UE 1][RAPROC][RA-RNTI 0005] Got BI RAR subPDU 267 ms
+632091.524849 [NR_MAC] I [UE 1][RAPROC][RA-RNTI 010b] Got RAPID RAR subPDU
+632091.524852 [NR_MAC] A [UE 1][RAPROC][24.7] Found RAR with the intended RAPID 55
+632091.524856 [MAC] W received TA command 31
+632091.524878 [PHY] I RAR-Msg2 decoded
+
+
+632091.539602 [NR_MAC] A [RAPROC][24.17] RA-Msg3 transmitted
+632091.571465 [MAC] I [UE 1]Frame 25 Contention resolution identity: 0x18e9a76c4846 Terminating RA procedure
+632091.571496 [MAC] A [UE 1][25.10][RAPROC] 4-Step RA procedure succeeded. CBRA: Contention Resolution is successful.
+632091.571619 [NR_RRC] I [UE1][RAPROC] Logical Channel DL-CCCH (SRB0), Received NR_RRCSetup
+
+632091.571979 [RLC] I Added srb 1 to UE 1
+632091.572091 [NR_RRC] W UE1: Ignorar RadioBearerConfig no modo mínimo
+632091.572109 [NR_RRC] I [UE 1] Ignorar RRCSetupComplete no modo mínimo
+632091.572107 [MAC] I [UE 1] Applying CellGroupConfig from gNodeB
+
+632091.605124 [NR_RRC] I [UE_ID = 0] Received securityModeCommand (gNB 0)
+632091.605149 [NR_RRC] I Receiving from SRB1 (DL-DCCH), Processing securityModeCommand
+632091.605153 [NR_RRC] I Security algorithm is set to nea0
+632091.605156 [NR_RRC] I Integrity protection algorithm is set to nia2
+632091.610346 [NR_RRC] I Receiving from SRB1 (DL-DCCH), encoding securityModeComplete, rrc_TransactionIdentifier: 0
+632091.671822 [NR_RRC] I [UE 0] Received Capability Enquiry (gNB 0)
+632091.671842 [NR_RRC] I [UE_ID = 0] Receiving from SRB1 (DL-DCCH), Processing UECapabilityEnquiry
+
+CMDLINE: "/opt/oai-nr-ue/bin/nr-uesoftmodem" "-O" "/opt/oai-nr-ue/etc/nr-ue.conf" "--rfsim" "--log_config.global_log_options" "level,nocolor,time" "-r" "106" "--numerology" "1" "-C" "3619200000" "--uicc0.imsi" "208990100001100" "--rfsimulator.serveraddr" "192.168.78.5"
+[CONFIG] function config_libconfig_init returned 0
+UE threads created by 7
+TYPE <CTRL-C> TO TERMINATE
+Initializing random number generator, seed 5884949348273917909
+Initializing random number generator, seed 7742869247007527932
+Entering ITTI signals handler
+TYPE <CTRL-C> TO TERMINATE
+
+kgnb : 5c 9c d3 3e 76 26 ea a6 71 26 57 71 30 0b 7b 4f 71 a0 93 e5 c8 8f 31 89 c3 73 ce b4 23 07 5b 1a
+kausf:9d 6d 76 83 5b 34 46 1f 91 e3 49 a0 ae b9 84 5 65 2c 9c 1a d4 8b cd 2b 84 dd 58 13 3d 73 e3 2e
+kseaf:c7 b6 ef 40 c7 65 6e d9 4f e1 5 e d1 1c d1 3e 62 29 95 ca 9 f9 fe a6 2d a6 5d e2 d 12 58 25
+kamf:28 e6 8 b9 9c ec 60 25 1b 54 15 fe de 4f 5d 20 c0 bf 0 e3 51 47 a1 42 71 dc 31 e 58 b6 ee 11
+knas_int: 77 81 82 3b 5f c0 fc 75 2c 2c 7d f9 20 6d c0 5d
+knas_enc: c6 3b 24 fc d3 26 8c db cc 3 ee 10 7b 1c dc ef
+mac e1 83 2 7d
+632091.608615 [NR_RRC] I deriving kRRCenc, kRRCint from KgNB=5c 9c d3 3e 76 26 ea a6 71 26 57 71 30 0b 7b 4f 71 a0 93 e5 c8 8f 31 89 c3 73 ce b4 23 07 5b 1a
+632091.610371 [NR_RRC] I securityModeComplete payload: 28 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+<UE-NR-Capability>
+    <accessStratumRelease><rel15/></accessStratumRelease>
+    <pdcp-Parameters>
+        <supportedROHC-Profiles>
+            <profile0x0000><false/></profile0x0000>
+            <profile0x0001><false/></profile0x0001>
+            <profile0x0002><false/></profile0x0002>
+            <profile0x0003><false/></profile0x0003>
+            <profile0x0004><false/></profile0x0004>
+            <profile0x0006><false/></profile0x0006>
+            <profile0x0101><false/></profile0x0101>
+            <profile0x0102><false/></profile0x0102>
+            <profile0x0103><false/></profile0x0103>
+            <profile0x0104><false/></profile0x0104>
+        </supportedROHC-Profiles>
+        <maxNumberROHC-ContextSessions><cs2/></maxNumberROHC-ContextSessions>
+    </pdcp-Parameters>
+    <phy-Parameters>
+    </phy-Parameters>
+    <rf-Parameters>
+        <supportedBandListNR>
+            <BandNR>
+                <bandNR>1</bandNR>
+            </BandNR>
+        </supportedBandListNR>
+    </rf-Parameters>
+</UE-NR-Capability>
+
+632091.673132 [PHY] I [RRC]UE NR Capability encoded, 10 bytes (86 bits)
+632091.673142 [NR_RRC] I UECapabilityInformation Encoded 106 bits (14 bytes)
+632091.759349 [NAS] I [UE 0] Received NAS_DOWNLINK_DATA_IND: length 61 , buffer 0x725c78002d30
+632091.759735 [NAS] I [UE] Received REGISTRATION ACCEPT message
+632091.759768 [NAS] I Send NAS_UPLINK_DATA_REQ message(RegistrationComplete)
+632091.759826 [NAS] I Send NAS_UPLINK_DATA_REQ message(PduSessionEstablishRequest)
+632092.204439 [NR_RRC] I RRCReconfiguration includes radio Bearer Configuration
+632092.207657 [PDCP] I added drb 1 to UE ID 0
+632092.207688 [SDAP] I Default DRB for the created SDAP entity: 1
+632092.207692 [NR_RRC] I State = NR_RRC_CONNECTED
+632092.207841 [RLC] I Added srb 2 to UE 0
+632092.207846 [RLC] I Added drb 1 to UE 0
+632092.207848 [RLC] I Added DRB to UE 0
+
+632092.207862 [NR_RRC] I RRCReconfiguration includes Measurement Configuration
+632092.207871 [NR_RRC] I rrcReconfigurationComplete Encoded 10 bits (2 bytes)
+632092.207875 [NR_RRC] I  Logical Channel UL-DCCH (SRB1), Generating RRCReconfigurationComplete (bytes 2)
+632092.207899 [NAS] I [UE 0] Received NAS_CONN_ESTABLI_CNF: errCode 1, length 99
+632092.207918 [NAS] I Received PDU Session Establishment Accept, UE IPv4: 12.1.1.8
+Unknown IEI 129
+632092.208338 [MAC] I [UE 0] Applying CellGroupConfig from gNodeB
+632092.208497 [OIP] I Interface oaitun_ue1 successfully configured, IPv4 12.1.1.8, IPv6 (null)
+632092.208738 [SDAP] E /oai-ran/openair2/SDAP/nr_sdap/nr_sdap.c:49:sdap_data_req: Entity not found with ue: 0x0 and pdusession id: 0
+
+
+632093.821585 [NR_MAC] I UE 0 stats sfn: 896.8, cumulated bad DCI 0
+    DL harq: 13/0
+    Ul harq: 22/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.9, nb symbols 4.4)
+632095.472913 [NR_MAC] I UE 1 stats sfn: 128.8, cumulated bad DCI 0
+    DL harq: 2/0
+    Ul harq: 12/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.2, nb symbols 11.3)
+632098.785015 [NR_MAC] I UE 0 stats sfn: 0.8, cumulated bad DCI 0
+    DL harq: 15/0
+    Ul harq: 38/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.5, nb symbols 6.9)
+632100.500300 [NR_MAC] I UE 1 stats sfn: 256.8, cumulated bad DCI 0
+    DL harq: 3/0
+    Ul harq: 24/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.1, nb symbols 12.2)
+632104.222844 [NR_MAC] I UE 0 stats sfn: 128.8, cumulated bad DCI 0
+    DL harq: 16/0
+    Ul harq: 51/0 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.4, nb symbols 8.5)
+632106.321244 [NR_MAC] I UE 1 stats sfn: 384.8, cumulated bad DCI 0
+    DL harq: 4/0
+    Ul harq: 37/1 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.6, nb symbols 12.2)
+632109.580822 [NR_MAC] I UE 0 stats sfn: 256.8, cumulated bad DCI 0
+    DL harq: 20/0
+    Ul harq: 70/1 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.3, nb symbols 8.6)
+632111.384841 [NR_MAC] I UE 1 stats sfn: 512.8, cumulated bad DCI 0
+    DL harq: 5/0
+    Ul harq: 50/1 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.4, nb symbols 12.4)
+632114.931319 [NR_MAC] I UE 0 stats sfn: 384.8, cumulated bad DCI 0
+    DL harq: 21/0
+    Ul harq: 83/1 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.2, nb symbols 9.3)
+632116.741064 [NR_MAC] I UE 1 stats sfn: 640.8, cumulated bad DCI 0
+    DL harq: 7/0
+    Ul harq: 63/1 avg code rate 0.7, avg bit/symbol 2.0, avg per TB: (nb RBs 5.3, nb symbols 12.5)
