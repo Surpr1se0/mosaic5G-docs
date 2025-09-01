@@ -21,33 +21,29 @@ The following repository contains (currently):
 - Wiki
 - Cenarios for **OpenAirInterface** implementation:
 
-| **Cenário**    | **Componentes**                 |
-| -------------- | ------------------------------- |
-| Scenario 3     | CU + DU + FlexRIC + CN          |
-| Scenario 4     | CUCP + CUUP + DU + FlexRIC + CN |
-| Monolithic     | " Same nodes on 1 VM            |
-| Disaggregated Cell-Based | " Same node on 4 Different Machines, with UE cell-based version                             |
-| Disaggregated Cell-Free | " Same node on 4 Different Machines, with UE cell-Free version                               |
+| ****    | **Component**                 | **Used for thesis**
+| -------------- | ------------------------------- |------------------------
+| Scenario 3     | CU + DU + FlexRIC + CN          |❌
+| Scenario 4     | CUCP + CUUP + DU + FlexRIC + CN |❌
+| Monolithic     | " Same nodes on 1 VM            |❌
+| Disaggregated Cell-Based | " Same node on 4 Different Machines, with UE cell-based version | ✅
+| Disaggregated Cell-Free | " Same node on 4 Different Machines, with UE cell-Free version |✅
 
 - ...
 
 ## Wiki
 
 The **wiki** covers the following subjects/sections:
-
-- **Introduction:** General information about the project's scope, objectives, and technical background
-
-- **Home:** Overview and introduction to the project
-
-- **FlexRAN & FlexRIC:** Documentation of the FlexRAN and FlexRIC components and implementation of FlexRIC component 
-
-- **Mosaic5G Components:** Details on Mosaic5G's tools and functionalities
-
-- **OpenAirInterface Components:** Insights into individual components of OpenAirInterface
-
-- **OpenAirInterface CN and NG-RAN:** Deployment and configuration steps for OpenAirInterface Core Network and NG-RAN E2E 5G System
-
-- **XCP-NG Implementation:** A guide for virtualization and deployment using XCP-ng
-
-
-## ...   
+- **Home**: introduction, general purpose notes and project architecture overview;
+- **Mosaic5G Components**: description of every Mosaic5G component, including prerequisites and versions
+- **OpenAirInterface Components**: description of every OpenAirInterface component, including prerequisites and versions;
+- **FlexRAN & FlexRIC**: comparison of FlexRIC and FlexRAN, available features, xApp theory and xApp variable definitions;
+- **Pilot Signals in OAI**: in-depth description of pilto signals, their generation, gold sequences, and how they are leveraged for channel estimation;
+- **Implemented Architectures**: detailed instructions for every deployment model used, from basic out of the box setups, to fully disaggregated environments with complex nodes; 
+- **Additional Notes**: details on configuration parameters used in the previous setups; 
+- **FlexRIC Implementation**: guidelines on different types of FlexRIC installation; 
+- **Custom Docker Images**: instructions on compiling, building and deploying different developed types of custom docker images;
+- **T-tracer Notes**: notes and problem documentation for the T-Tracer tool;
+- **Troubleshooting**: issues encountered, and guidelines for their solutions;
+- **Portainer Implementation**: implementation notes and guides for the managing tool Portainer;
+- **XCP-NG and VM Implementation**: setup guide on implementing a virtualized environment using XCP-NG and troubleshooting common faced errors:
