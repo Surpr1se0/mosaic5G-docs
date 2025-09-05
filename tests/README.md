@@ -1,1 +1,1 @@
-https://drive.google.com/drive/folders/1YdmBhRmHKTWXoUd7RtwMMWTXZMiPOomQ
+For the full log files and logs: https://drive.google.com/drive/folders/1YdmBhRmHKTWXoUd7RtwMMWTXZMiPOomQ
